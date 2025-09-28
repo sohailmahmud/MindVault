@@ -38,7 +38,8 @@ void main() {
           .thenAnswer((_) async => Right(testDocuments));
 
       // act
-      final result = await searchDocuments(const SearchParams(query: testQuery));
+      final result =
+          await searchDocuments(const SearchParams(query: testQuery));
 
       // assert
       expect(result, Right(testDocuments));
@@ -53,7 +54,8 @@ void main() {
           .thenAnswer((_) async => const Left(failure));
 
       // act
-      final result = await searchDocuments(const SearchParams(query: testQuery));
+      final result =
+          await searchDocuments(const SearchParams(query: testQuery));
 
       // assert
       expect(result, const Left(failure));
