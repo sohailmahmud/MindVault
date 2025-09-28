@@ -60,9 +60,12 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  integration_test:
+    sdk: flutter
 
   # Testing
   mockito: ^5.4.4
+  bloc_test: ^9.1.5
   build_runner: ^2.4.7
   
   # Code generation
