@@ -1,5 +1,10 @@
 # MindVault 
 
+[![Flutter](https://img.shields.io/badge/Flutter-3.35.1-02569B.svg?style=flat&logo=flutter)](https://flutter.dev)
+[![Dart](https://img.shields.io/badge/Dart-3.9.0-0175C2.svg?style=flat&logo=dart)](https://dart.dev)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/sohailmahmud/MindVault/ci.yml?branch=main&style=flat&logo=github)](https://github.com/sohailmahmud/MindVault/actions)
+[![Coverage Status](https://coveralls.io/repos/github/sohailmahmud/MindVault/badge.svg?branch=main)](https://coveralls.io/github/sohailmahmud/MindVault?branch=main)
+
 **MindVault** is a powerful on-device AI search application built with Flutter that helps you organize, search, and manage your documents using semantic search capabilities. All processing happens locally on your device, ensuring privacy and speed.
 
 ## Features
