@@ -80,7 +80,10 @@ class SearchLocalDataSourceImpl implements SearchLocalDataSource {
 
   @override
   Future<void> deleteDocument(int id) async {
-    _documentBox.remove(id);
+    final deleted = _documentBox.remove(id);
+    if (!deleted) {
+      throw Exception('Failed to delete document with ID: $id. Document may not exist.');
+    }
   }
 
   @override
@@ -224,8 +227,15 @@ class SearchLocalDataSourceImpl implements SearchLocalDataSource {
 
   @override
   Future<void> deleteMultipleDocuments(List<int> ids) async {
+    final failedDeletes = <int>[];
     for (final id in ids) {
-      _documentBox.remove(id);
+      final deleted = _documentBox.remove(id);
+      if (!deleted) {
+        failedDeletes.add(id);
+      }
+    }
+    if (failedDeletes.isNotEmpty) {
+      throw Exception('Failed to delete documents with IDs: $failedDeletes. Documents may not exist.');
     }
   }
 

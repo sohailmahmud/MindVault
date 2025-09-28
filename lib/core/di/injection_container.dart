@@ -9,6 +9,7 @@ import '../../features/search/data/repositories/search_repository_impl.dart';
 import '../../features/search/domain/repositories/search_repository.dart';
 import '../../features/search/domain/usecases/add_document.dart';
 import '../../features/search/domain/usecases/delete_document.dart';
+import '../../features/search/domain/usecases/delete_multiple_documents.dart';
 import '../../features/search/domain/usecases/get_all_documents.dart';
 import '../../features/search/domain/usecases/get_document_by_id.dart';
 import '../../features/search/domain/usecases/search_documents.dart';
@@ -49,6 +50,7 @@ Future<void> initializeDependencies() async {
   serviceLocator.registerLazySingleton(() => AddDocument(serviceLocator()));
   serviceLocator.registerLazySingleton(() => UpdateDocument(serviceLocator()));
   serviceLocator.registerLazySingleton(() => DeleteDocument(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => DeleteMultipleDocuments(serviceLocator()));
   serviceLocator.registerLazySingleton(() => GetDocumentById(serviceLocator()));
 
   // BLoC
@@ -60,6 +62,7 @@ Future<void> initializeDependencies() async {
       addDocument: serviceLocator(),
       updateDocument: serviceLocator(),
       deleteDocument: serviceLocator(),
+      deleteMultipleDocuments: serviceLocator(),
       getDocumentById: serviceLocator(),
     ),
   );

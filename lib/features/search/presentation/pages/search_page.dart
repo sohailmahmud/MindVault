@@ -196,8 +196,33 @@ class _SearchViewState extends State<SearchView> {
             ),
           ),
           Expanded(
-            child: BlocBuilder<SearchBloc, SearchState>(
-              builder: (context, state) {
+            child: BlocListener<SearchBloc, SearchState>(
+              listener: (context, state) {
+                if (state is DocumentDeleted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Document deleted successfully!'),
+                      backgroundColor: Colors.orange,
+                    ),
+                  );
+                } else if (state is MultipleDocumentsDeleted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('${state.documentIds.length} documents deleted successfully!'),
+                      backgroundColor: Colors.orange,
+                    ),
+                  );
+                } else if (state is SearchError && state.message.contains('delete')) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Delete Error: ${state.message}'),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
+              },
+              child: BlocBuilder<SearchBloc, SearchState>(
+                builder: (context, state) {
                 if (state is SearchLoading) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is SearchError) {
@@ -313,6 +338,7 @@ class _SearchViewState extends State<SearchView> {
 
                 return const Center(child: Text('Welcome to MindVault'));
               },
+            ),
             ),
           ),
         ],

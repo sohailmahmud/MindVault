@@ -4,6 +4,7 @@ import '../../../../core/error/failures.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../../domain/usecases/add_document.dart';
 import '../../domain/usecases/delete_document.dart';
+import '../../domain/usecases/delete_multiple_documents.dart';
 import '../../domain/usecases/get_all_documents.dart';
 import '../../domain/usecases/get_document_by_id.dart';
 import '../../domain/usecases/search_documents.dart';
@@ -19,6 +20,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final AddDocument addDocument;
   final UpdateDocument updateDocument;
   final DeleteDocument deleteDocument;
+  final DeleteMultipleDocuments deleteMultipleDocuments;
   final GetDocumentById getDocumentById;
 
   SearchBloc({
@@ -28,6 +30,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     required this.addDocument,
     required this.updateDocument,
     required this.deleteDocument,
+    required this.deleteMultipleDocuments,
     required this.getDocumentById,
   }) : super(SearchInitial()) {
     on<SearchDocumentsEvent>(_onSearchDocuments);
@@ -161,18 +164,16 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   void _onDeleteMultipleDocuments(DeleteMultipleDocumentsEvent event, Emitter<SearchState> emit) async {
     emit(SearchLoading());
     
-    // Delete documents one by one for now (could be optimized with bulk operation)
-    for (final documentId in event.documentIds) {
-      final result = await deleteDocument(DeleteDocumentParams(documentId: documentId));
-      if (result.isLeft()) {
-        emit(SearchError('Failed to delete some documents'));
-        return;
-      }
-    }
+    final result = await deleteMultipleDocuments(DeleteMultipleDocumentsParams(documentIds: event.documentIds));
     
-    emit(MultipleDocumentsDeleted(event.documentIds));
-    // Reload all documents after deleting
-    add(const LoadAllDocumentsEvent());
+    result.fold(
+      (failure) => emit(SearchError(_mapFailureToMessage(failure))),
+      (_) {
+        emit(MultipleDocumentsDeleted(event.documentIds));
+        // Reload all documents after deleting
+        add(const LoadAllDocumentsEvent());
+      },
+    );
   }
 
   String _mapFailureToMessage(Failure failure) {
