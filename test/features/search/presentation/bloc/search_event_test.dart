@@ -9,7 +9,7 @@ void main() {
       title: 'Test Document',
       content: 'Test content',
       category: 'Test Category',
-      tags: ['tag1', 'tag2'],
+      tags: const ['tag1', 'tag2'],
       createdAt: DateTime(2023, 1, 1),
       updatedAt: DateTime(2023, 1, 2),
     );
@@ -87,7 +87,7 @@ void main() {
           title: 'Different Document',
           content: 'Different content',
           category: 'Different Category',
-          tags: ['different'],
+          tags: const ['different'],
           createdAt: DateTime(2023, 2, 1),
           updatedAt: DateTime(2023, 2, 2),
         );
@@ -131,7 +131,7 @@ void main() {
           title: 'Different Document',
           content: 'Different content',
           category: 'Different Category',
-          tags: ['different'],
+          tags: const ['different'],
           createdAt: DateTime(2023, 2, 1),
           updatedAt: DateTime(2023, 2, 2),
         );

@@ -9,7 +9,7 @@ void main() {
       title: 'Test Document',
       content: 'Test content',
       category: 'Test Category',
-      tags: ['tag1', 'tag2'],
+      tags: const ['tag1', 'tag2'],
       createdAt: DateTime(2023, 1, 1),
       updatedAt: DateTime(2023, 1, 2),
     );
@@ -19,7 +19,7 @@ void main() {
       title: 'Test Document 2',
       content: 'Test content 2',
       category: 'Test Category 2',
-      tags: ['tag3', 'tag4'],
+      tags: const ['tag3', 'tag4'],
       createdAt: DateTime(2023, 2, 1),
       updatedAt: DateTime(2023, 2, 2),
     );

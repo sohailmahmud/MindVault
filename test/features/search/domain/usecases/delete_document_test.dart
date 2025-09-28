@@ -26,7 +26,7 @@ void main() {
 
       // act
       final result =
-          await deleteDocument(DeleteDocumentParams(documentId: testId));
+          await deleteDocument(const DeleteDocumentParams(documentId: testId));
 
       // assert
       expect(result, const Right(unit));
@@ -43,7 +43,7 @@ void main() {
 
       // act
       final result =
-          await deleteDocument(DeleteDocumentParams(documentId: testId));
+          await deleteDocument(const DeleteDocumentParams(documentId: testId));
 
       // assert
       expect(result, const Left(failure));

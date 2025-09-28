@@ -38,15 +38,15 @@ void main() {
     test('should return failure when repository call is unsuccessful',
         () async {
       // arrange
-      final failure = DatabaseFailure('Failed to delete documents');
+      const failure = DatabaseFailure('Failed to delete documents');
       when(() => mockSearchRepository.deleteMultipleDocuments(any()))
-          .thenAnswer((_) async => Left(failure));
+          .thenAnswer((_) async => const Left(failure));
 
       // act
       final result = await deleteMultipleDocuments(testParams);
 
       // assert
-      expect(result, Left(failure));
+      expect(result, const Left(failure));
       verify(() => mockSearchRepository.deleteMultipleDocuments([1, 2, 3]));
       verifyNoMoreInteractions(mockSearchRepository);
     });

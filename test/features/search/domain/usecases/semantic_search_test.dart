@@ -49,7 +49,7 @@ void main() {
 
       // act
       final result =
-          await semanticSearch(SemanticSearchParams(query: testQuery));
+          await semanticSearch(const SemanticSearchParams(query: testQuery));
 
       // assert
       expect(result, Right(testDocuments));
@@ -66,7 +66,7 @@ void main() {
 
       // act
       final result =
-          await semanticSearch(SemanticSearchParams(query: testQuery));
+          await semanticSearch(const SemanticSearchParams(query: testQuery));
 
       // assert
       expect(result, Left(failure));

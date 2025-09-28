@@ -14,7 +14,6 @@ class FakeDocument extends Fake implements Document {}
 void main() {
   late UpdateDocument updateDocument;
   late MockSearchRepository mockSearchRepository;
-  late UpdateDocumentParams testParams;
   late Document testDocument;
 
   setUpAll(() {

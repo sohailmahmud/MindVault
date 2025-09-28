@@ -38,7 +38,7 @@ void main() {
           .thenAnswer((_) async => Right(testDocuments));
 
       // act
-      final result = await searchDocuments(SearchParams(query: testQuery));
+      final result = await searchDocuments(const SearchParams(query: testQuery));
 
       // assert
       expect(result, Right(testDocuments));
@@ -48,15 +48,15 @@ void main() {
 
     test('should return failure when search is unsuccessful', () async {
       // arrange
-      final failure = DatabaseFailure('Search failed');
+      const failure = DatabaseFailure('Search failed');
       when(() => mockSearchRepository.searchDocuments(any()))
-          .thenAnswer((_) async => Left(failure));
+          .thenAnswer((_) async => const Left(failure));
 
       // act
-      final result = await searchDocuments(SearchParams(query: testQuery));
+      final result = await searchDocuments(const SearchParams(query: testQuery));
 
       // assert
-      expect(result, Left(failure));
+      expect(result, const Left(failure));
       verify(() => mockSearchRepository.searchDocuments(testQuery));
       verifyNoMoreInteractions(mockSearchRepository);
     });

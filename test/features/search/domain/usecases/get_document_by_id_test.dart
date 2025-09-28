@@ -48,15 +48,15 @@ void main() {
     test('should return failure when repository call is unsuccessful',
         () async {
       // arrange
-      final failure = DatabaseFailure('Document not found');
+      const failure = DatabaseFailure('Document not found');
       when(() => mockSearchRepository.getDocumentById(any()))
-          .thenAnswer((_) async => Left(failure));
+          .thenAnswer((_) async => const Left(failure));
 
       // act
       final result = await getDocumentById(testParams);
 
       // assert
-      expect(result, Left(failure));
+      expect(result, const Left(failure));
       verify(() => mockSearchRepository.getDocumentById(1));
       verifyNoMoreInteractions(mockSearchRepository);
     });
