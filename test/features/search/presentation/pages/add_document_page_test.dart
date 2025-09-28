@@ -60,7 +60,8 @@ void main() {
         expect(find.text('Tags (Optional)'), findsOneWidget);
 
         // Check submit button
-        expect(find.widgetWithText(ElevatedButton, 'Add Document'), findsOneWidget);
+        expect(find.widgetWithText(ElevatedButton, 'Add Document'),
+            findsOneWidget);
       });
 
       testWidgets('displays hint texts correctly', (WidgetTester tester) async {
@@ -246,7 +247,8 @@ void main() {
         await tester.pumpWidget(createAddDocumentPage());
 
         expect(find.byType(CircularProgressIndicator), findsNWidgets(2));
-        expect(find.widgetWithText(ElevatedButton, 'Add Document'), findsNothing);
+        expect(
+            find.widgetWithText(ElevatedButton, 'Add Document'), findsNothing);
       });
 
       testWidgets('disables submit button when loading',

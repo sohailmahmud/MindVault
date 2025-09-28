@@ -100,8 +100,10 @@ void main() {
         // assert
         expect(find.text('Save Changes'), findsOneWidget);
         expect(find.text('Delete Document'), findsOneWidget);
-        expect(find.byIcon(Icons.delete), findsOneWidget); // AppBar delete button
-        expect(find.byIcon(Icons.delete_outline), findsOneWidget); // Button delete icon
+        expect(
+            find.byIcon(Icons.delete), findsOneWidget); // AppBar delete button
+        expect(find.byIcon(Icons.delete_outline),
+            findsOneWidget); // Button delete icon
         expect(find.text('Save'), findsOneWidget); // AppBar save button
       });
     });
@@ -131,14 +133,14 @@ void main() {
         // act - Clear title field and try to save
         final titleField = find.widgetWithText(TextFormField, 'Test Document');
         await tester.enterText(titleField, '');
-        
+
         // Scroll to make sure the save button is visible
         await tester.dragUntilVisible(
           find.widgetWithText(ElevatedButton, 'Save Changes'),
           find.byType(SingleChildScrollView),
           const Offset(0, -100),
         );
-        
+
         await tester.tap(find.widgetWithText(ElevatedButton, 'Save Changes'));
         await tester.pump();
 
@@ -193,8 +195,9 @@ void main() {
           find.byType(SingleChildScrollView),
           const Offset(0, -100),
         );
-        
-        await tester.tap(find.widgetWithText(OutlinedButton, 'Delete Document'));
+
+        await tester
+            .tap(find.widgetWithText(OutlinedButton, 'Delete Document'));
         await tester.pumpAndSettle();
 
         // assert
@@ -215,8 +218,9 @@ void main() {
           find.byType(SingleChildScrollView),
           const Offset(0, -100),
         );
-        
-        await tester.tap(find.widgetWithText(OutlinedButton, 'Delete Document'));
+
+        await tester
+            .tap(find.widgetWithText(OutlinedButton, 'Delete Document'));
         await tester.pumpAndSettle();
 
         expect(find.byType(AlertDialog), findsOneWidget);
