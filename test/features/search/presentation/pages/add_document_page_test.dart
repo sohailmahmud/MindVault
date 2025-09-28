@@ -29,7 +29,7 @@ void main() {
     setUp(() {
       mockSearchBloc = MockSearchBloc();
       when(() => mockSearchBloc.state).thenReturn(SearchInitial());
-      when(() => mockSearchBloc.stream).thenAnswer((_) => Stream.empty());
+      when(() => mockSearchBloc.stream).thenAnswer((_) => const Stream.empty());
     });
 
     Widget createAddDocumentPage() {
