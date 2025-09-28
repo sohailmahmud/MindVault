@@ -45,7 +45,8 @@ void main() {
       verifyNoMoreInteractions(mockSearchRepository);
     });
 
-    test('should return failure when repository call is unsuccessful', () async {
+    test('should return failure when repository call is unsuccessful',
+        () async {
       // arrange
       final failure = DatabaseFailure('Document not found');
       when(() => mockSearchRepository.getDocumentById(any()))

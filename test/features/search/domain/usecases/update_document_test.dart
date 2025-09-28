@@ -36,13 +36,15 @@ void main() {
   });
 
   group('UpdateDocument', () {
-    test('should return updated document when repository call is successful', () async {
+    test('should return updated document when repository call is successful',
+        () async {
       // arrange
       when(() => mockSearchRepository.updateDocument(any()))
           .thenAnswer((_) async => Right(testDocument));
 
       // act
-      final result = await updateDocument(UpdateDocumentParams(document: testDocument));
+      final result =
+          await updateDocument(UpdateDocumentParams(document: testDocument));
 
       // assert
       expect(result, Right(testDocument));
@@ -50,14 +52,16 @@ void main() {
       verifyNoMoreInteractions(mockSearchRepository);
     });
 
-    test('should return failure when repository call is unsuccessful', () async {
+    test('should return failure when repository call is unsuccessful',
+        () async {
       // arrange
       const failure = DatabaseFailure('Update failed');
       when(() => mockSearchRepository.updateDocument(any()))
           .thenAnswer((_) async => const Left(failure));
 
       // act
-      final result = await updateDocument(UpdateDocumentParams(document: testDocument));
+      final result =
+          await updateDocument(UpdateDocumentParams(document: testDocument));
 
       // assert
       expect(result, const Left(failure));
@@ -73,7 +77,8 @@ void main() {
     test('UpdateDocumentParams equality should work correctly', () {
       final params1 = UpdateDocumentParams(document: testDocument);
       final params2 = UpdateDocumentParams(document: testDocument);
-      final params3 = UpdateDocumentParams(document: testDocument.copyWith(title: 'Different'));
+      final params3 = UpdateDocumentParams(
+          document: testDocument.copyWith(title: 'Different'));
 
       expect(params1, params2);
       expect(params1, isNot(params3));

@@ -143,7 +143,7 @@ class _SearchViewState extends State<SearchView> {
                       onPressed: () async {
                         final navigator = Navigator.of(context);
                         final bloc = context.read<SearchBloc>();
-                        
+
                         await navigator.push(
                           MaterialPageRoute(
                               builder: (context) => const AddDocumentPage()),

@@ -13,10 +13,24 @@ void main() {
 
       // Create test documents with specific searchable content
       final testDocuments = [
-        {'title': 'Flutter Development Guide', 'content': 'Learn Flutter development with widgets and state management'},
-        {'title': 'JavaScript Tutorial', 'content': 'Complete guide to JavaScript programming and web development'},
-        {'title': 'Mobile App Design', 'content': 'Best practices for designing mobile applications'},
-        {'title': 'Database Management', 'content': 'SQL and NoSQL database concepts and implementation'},
+        {
+          'title': 'Flutter Development Guide',
+          'content':
+              'Learn Flutter development with widgets and state management'
+        },
+        {
+          'title': 'JavaScript Tutorial',
+          'content':
+              'Complete guide to JavaScript programming and web development'
+        },
+        {
+          'title': 'Mobile App Design',
+          'content': 'Best practices for designing mobile applications'
+        },
+        {
+          'title': 'Database Management',
+          'content': 'SQL and NoSQL database concepts and implementation'
+        },
       ];
 
       for (final doc in testDocuments) {
@@ -24,7 +38,8 @@ void main() {
         await tester.pumpAndSettle();
 
         await tester.enterText(find.byType(TextFormField).first, doc['title']!);
-        await tester.enterText(find.byType(TextFormField).at(1), doc['content']!);
+        await tester.enterText(
+            find.byType(TextFormField).at(1), doc['content']!);
 
         await tester.tap(find.text('Save Document'));
         await tester.pumpAndSettle();
@@ -32,7 +47,8 @@ void main() {
       }
 
       // Test exact word search
-      final searchField = find.widgetWithText(TextField, 'Search documents...').first;
+      final searchField =
+          find.widgetWithText(TextField, 'Search documents...').first;
       await tester.enterText(searchField, 'Flutter');
       await tester.testTextInput.receiveAction(TextInputAction.done);
       await tester.pumpAndSettle();
@@ -73,16 +89,30 @@ void main() {
       }
     });
 
-    testWidgets('AI semantic search functionality', (WidgetTester tester) async {
+    testWidgets('AI semantic search functionality',
+        (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
 
       // Create documents with semantically related but different terminology
       final semanticDocuments = [
-        {'title': 'Car Maintenance Tips', 'content': 'How to maintain your vehicle and keep it running smoothly'},
-        {'title': 'Cooking Recipes', 'content': 'Delicious recipes for meals and food preparation techniques'},
-        {'title': 'Exercise Routine', 'content': 'Physical fitness workouts and training schedules'},
-        {'title': 'Garden Care Guide', 'content': 'Plant care, watering, and gardening best practices'},
+        {
+          'title': 'Car Maintenance Tips',
+          'content': 'How to maintain your vehicle and keep it running smoothly'
+        },
+        {
+          'title': 'Cooking Recipes',
+          'content':
+              'Delicious recipes for meals and food preparation techniques'
+        },
+        {
+          'title': 'Exercise Routine',
+          'content': 'Physical fitness workouts and training schedules'
+        },
+        {
+          'title': 'Garden Care Guide',
+          'content': 'Plant care, watering, and gardening best practices'
+        },
       ];
 
       for (final doc in semanticDocuments) {
@@ -90,7 +120,8 @@ void main() {
         await tester.pumpAndSettle();
 
         await tester.enterText(find.byType(TextFormField).first, doc['title']!);
-        await tester.enterText(find.byType(TextFormField).at(1), doc['content']!);
+        await tester.enterText(
+            find.byType(TextFormField).at(1), doc['content']!);
 
         await tester.tap(find.text('Save Document'));
         await tester.pumpAndSettle();
@@ -108,7 +139,8 @@ void main() {
       expect(aiSearchChip.selected, isTrue);
 
       // Test semantic search - search for "automobile" should find car document
-      final searchField = find.widgetWithText(TextField, 'Search documents...').first;
+      final searchField =
+          find.widgetWithText(TextField, 'Search documents...').first;
       await tester.enterText(searchField, 'automobile');
       await tester.testTextInput.receiveAction(TextInputAction.done);
       await tester.pumpAndSettle();
@@ -138,7 +170,8 @@ void main() {
       expect(textSearchChip.selected, isTrue);
     });
 
-    testWidgets('Search performance and responsiveness', (WidgetTester tester) async {
+    testWidgets('Search performance and responsiveness',
+        (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
 
@@ -147,8 +180,10 @@ void main() {
         await tester.tap(find.byIcon(Icons.add));
         await tester.pumpAndSettle();
 
-        await tester.enterText(find.byType(TextFormField).first, 'Performance Test Document $i');
-        await tester.enterText(find.byType(TextFormField).at(1), 'Content for performance testing document number $i with various keywords and content.');
+        await tester.enterText(
+            find.byType(TextFormField).first, 'Performance Test Document $i');
+        await tester.enterText(find.byType(TextFormField).at(1),
+            'Content for performance testing document number $i with various keywords and content.');
 
         await tester.tap(find.text('Save Document'));
         await tester.pumpAndSettle();
@@ -156,10 +191,17 @@ void main() {
       }
 
       // Test rapid search queries
-      final searchField = find.widgetWithText(TextField, 'Search documents...').first;
-      
-      final searchQueries = ['performance', 'test', 'document', 'content', 'number'];
-      
+      final searchField =
+          find.widgetWithText(TextField, 'Search documents...').first;
+
+      final searchQueries = [
+        'performance',
+        'test',
+        'document',
+        'content',
+        'number'
+      ];
+
       for (final query in searchQueries) {
         await tester.enterText(searchField, query);
         await tester.testTextInput.receiveAction(TextInputAction.done);
@@ -167,7 +209,7 @@ void main() {
 
         // Verify search completes and shows results
         expect(find.textContaining('results found'), findsOneWidget);
-        
+
         // Clear for next search
         await tester.tap(find.byIcon(Icons.clear));
         await tester.pumpAndSettle();
@@ -183,7 +225,8 @@ void main() {
       expect(find.text('Performance Test Document 10'), findsOneWidget);
     });
 
-    testWidgets('Search edge cases and error handling', (WidgetTester tester) async {
+    testWidgets('Search edge cases and error handling',
+        (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
 
@@ -191,14 +234,17 @@ void main() {
       await tester.tap(find.byIcon(Icons.add));
       await tester.pumpAndSettle();
 
-      await tester.enterText(find.byType(TextFormField).first, 'Edge Case Document');
-      await tester.enterText(find.byType(TextFormField).at(1), 'Content for testing edge cases in search functionality.');
+      await tester.enterText(
+          find.byType(TextFormField).first, 'Edge Case Document');
+      await tester.enterText(find.byType(TextFormField).at(1),
+          'Content for testing edge cases in search functionality.');
 
       await tester.tap(find.text('Save Document'));
       await tester.pumpAndSettle();
       await tester.pumpAndSettle(const Duration(seconds: 2));
 
-      final searchField = find.widgetWithText(TextField, 'Search documents...').first;
+      final searchField =
+          find.widgetWithText(TextField, 'Search documents...').first;
 
       // Test search with no results
       await tester.enterText(searchField, 'nonexistentterm');
@@ -224,7 +270,8 @@ void main() {
       expect(find.textContaining('No documents found'), findsOneWidget);
 
       // Test very long search query
-      const longQuery = 'this is a very long search query that tests how the search handles extremely long input strings';
+      const longQuery =
+          'this is a very long search query that tests how the search handles extremely long input strings';
       await tester.enterText(searchField, longQuery);
       await tester.testTextInput.receiveAction(TextInputAction.done);
       await tester.pumpAndSettle();
@@ -242,7 +289,8 @@ void main() {
       expect(find.text('Edge Case Document'), findsOneWidget);
     });
 
-    testWidgets('Search mode switching during active search', (WidgetTester tester) async {
+    testWidgets('Search mode switching during active search',
+        (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
 
@@ -250,15 +298,18 @@ void main() {
       await tester.tap(find.byIcon(Icons.add));
       await tester.pumpAndSettle();
 
-      await tester.enterText(find.byType(TextFormField).first, 'Search Mode Test');
-      await tester.enterText(find.byType(TextFormField).at(1), 'Testing search mode switching functionality.');
+      await tester.enterText(
+          find.byType(TextFormField).first, 'Search Mode Test');
+      await tester.enterText(find.byType(TextFormField).at(1),
+          'Testing search mode switching functionality.');
 
       await tester.tap(find.text('Save Document'));
       await tester.pumpAndSettle();
       await tester.pumpAndSettle(const Duration(seconds: 2));
 
       // Start with text search
-      final searchField = find.widgetWithText(TextField, 'Search documents...').first;
+      final searchField =
+          find.widgetWithText(TextField, 'Search documents...').first;
       await tester.enterText(searchField, 'test');
       await tester.testTextInput.receiveAction(TextInputAction.done);
       await tester.pumpAndSettle();

@@ -30,7 +30,8 @@ void main() {
       );
     }
 
-    testWidgets('displays search icon and hint text', (WidgetTester tester) async {
+    testWidgets('displays search icon and hint text',
+        (WidgetTester tester) async {
       await tester.pumpWidget(createSearchBarWidget());
 
       expect(find.byIcon(Icons.search), findsOneWidget);
@@ -38,7 +39,8 @@ void main() {
       expect(find.byIcon(Icons.clear), findsOneWidget);
     });
 
-    testWidgets('calls onSearch when text is submitted', (WidgetTester tester) async {
+    testWidgets('calls onSearch when text is submitted',
+        (WidgetTester tester) async {
       await tester.pumpWidget(createSearchBarWidget());
 
       const testQuery = 'flutter test';
@@ -49,15 +51,17 @@ void main() {
       expect(searchQueries, contains(testQuery));
     });
 
-    testWidgets('calls onClear when clear button is pressed', (WidgetTester tester) async {
+    testWidgets('calls onClear when clear button is pressed',
+        (WidgetTester tester) async {
       await tester.pumpWidget(createSearchBarWidget());
 
       await tester.tap(find.byIcon(Icons.clear));
-      
+
       expect(clearCallCount, equals(1));
     });
 
-    testWidgets('calls onClear when text is cleared', (WidgetTester tester) async {
+    testWidgets('calls onClear when text is cleared',
+        (WidgetTester tester) async {
       await tester.pumpWidget(createSearchBarWidget());
 
       // Enter some text first
@@ -71,7 +75,8 @@ void main() {
       expect(clearCallCount, equals(1));
     });
 
-    testWidgets('performs delayed search on text change', (WidgetTester tester) async {
+    testWidgets('performs delayed search on text change',
+        (WidgetTester tester) async {
       await tester.pumpWidget(createSearchBarWidget());
 
       const testQuery = 'delayed search';
@@ -110,7 +115,8 @@ void main() {
       expect(decoration.filled, isTrue);
     });
 
-    testWidgets('handles rapid text changes correctly', (WidgetTester tester) async {
+    testWidgets('handles rapid text changes correctly',
+        (WidgetTester tester) async {
       await tester.pumpWidget(createSearchBarWidget());
 
       // Type multiple characters quickly

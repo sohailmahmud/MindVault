@@ -41,13 +41,15 @@ void main() {
   });
 
   group('SemanticSearch', () {
-    test('should return documents when semantic search is successful', () async {
+    test('should return documents when semantic search is successful',
+        () async {
       // arrange
       when(() => mockSearchRepository.semanticSearch(any()))
           .thenAnswer((_) async => Right(testDocuments));
 
       // act
-      final result = await semanticSearch(SemanticSearchParams(query: testQuery));
+      final result =
+          await semanticSearch(SemanticSearchParams(query: testQuery));
 
       // assert
       expect(result, Right(testDocuments));
@@ -55,14 +57,16 @@ void main() {
       verifyNoMoreInteractions(mockSearchRepository);
     });
 
-    test('should return failure when semantic search is unsuccessful', () async {
+    test('should return failure when semantic search is unsuccessful',
+        () async {
       // arrange
       final failure = ServerFailure();
       when(() => mockSearchRepository.semanticSearch(any()))
           .thenAnswer((_) async => Left(failure));
 
       // act
-      final result = await semanticSearch(SemanticSearchParams(query: testQuery));
+      final result =
+          await semanticSearch(SemanticSearchParams(query: testQuery));
 
       // assert
       expect(result, Left(failure));

@@ -8,7 +8,7 @@ import 'user_experience_test.dart' as ux_tests;
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-  
+
   // Run all integration test suites
   app_tests.main();
   document_tests.main();

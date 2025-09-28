@@ -20,7 +20,8 @@ void main() {
   });
 
   group('DeleteMultipleDocuments', () {
-    test('should delete multiple documents when repository call is successful', () async {
+    test('should delete multiple documents when repository call is successful',
+        () async {
       // arrange
       when(() => mockSearchRepository.deleteMultipleDocuments(any()))
           .thenAnswer((_) async => const Right(unit));
@@ -34,7 +35,8 @@ void main() {
       verifyNoMoreInteractions(mockSearchRepository);
     });
 
-    test('should return failure when repository call is unsuccessful', () async {
+    test('should return failure when repository call is unsuccessful',
+        () async {
       // arrange
       final failure = DatabaseFailure('Failed to delete documents');
       when(() => mockSearchRepository.deleteMultipleDocuments(any()))
@@ -78,7 +80,9 @@ void main() {
       const params = DeleteMultipleDocumentsParams(documentIds: [1, 2, 3]);
 
       // assert
-      expect(params.props, [[1, 2, 3]]);
+      expect(params.props, [
+        [1, 2, 3]
+      ]);
     });
 
     test('should not be equal when document IDs are different', () {

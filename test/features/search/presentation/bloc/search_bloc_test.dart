@@ -90,7 +90,8 @@ class MockSearchRepository implements SearchRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> deleteMultipleDocuments(List<int> documentIds) async {
+  Future<Either<Failure, Unit>> deleteMultipleDocuments(
+      List<int> documentIds) async {
     if (shouldReturnError) return Left(failureToReturn!);
     return const Right(unit);
   }
@@ -102,13 +103,15 @@ class MockSearchRepository implements SearchRepository {
   }
 
   @override
-  Future<Either<Failure, List<Document>>> getDocumentsByCategory(String category) async {
+  Future<Either<Failure, List<Document>>> getDocumentsByCategory(
+      String category) async {
     if (shouldReturnError) return Left(failureToReturn!);
     return Right(documentsToReturn);
   }
 
   @override
-  Future<Either<Failure, List<Document>>> getDocumentsByTags(List<String> tags) async {
+  Future<Either<Failure, List<Document>>> getDocumentsByTags(
+      List<String> tags) async {
     if (shouldReturnError) return Left(failureToReturn!);
     return Right(documentsToReturn);
   }
@@ -152,7 +155,8 @@ class MockSearchRepository implements SearchRepository {
   }
 
   @override
-  Future<Either<Failure, List<Document>>> updateMultipleDocuments(List<Document> documents) async {
+  Future<Either<Failure, List<Document>>> updateMultipleDocuments(
+      List<Document> documents) async {
     if (shouldReturnError) return Left(failureToReturn!);
     return Right(documentsToReturn);
   }
@@ -161,7 +165,7 @@ class MockSearchRepository implements SearchRepository {
 void main() {
   late SearchBloc searchBloc;
   late MockSearchRepository mockRepository;
-  
+
   // Test use cases
   late SearchDocuments searchDocuments;
   late SemanticSearch semanticSearch;
@@ -197,7 +201,7 @@ void main() {
 
   setUp(() {
     mockRepository = MockSearchRepository();
-    
+
     // Initialize use cases with mock repository
     searchDocuments = SearchDocuments(mockRepository);
     semanticSearch = SemanticSearch(mockRepository);

@@ -37,7 +37,8 @@ void main() {
   });
 
   group('AddDocument', () {
-    test('should add document successfully when repository call succeeds', () async {
+    test('should add document successfully when repository call succeeds',
+        () async {
       // arrange
       when(() => mockSearchRepository.addDocument(any()))
           .thenAnswer((_) async => Right(testDocument));
@@ -75,8 +76,10 @@ void main() {
       await addDocument(testParams);
 
       // assert
-      final captured = verify(() => mockSearchRepository.addDocument(captureAny()))
-          .captured.single as Document;
+      final captured =
+          verify(() => mockSearchRepository.addDocument(captureAny()))
+              .captured
+              .single as Document;
       expect(captured.title, testDocument.title);
       expect(captured.content, testDocument.content);
       expect(captured.category, testDocument.category);

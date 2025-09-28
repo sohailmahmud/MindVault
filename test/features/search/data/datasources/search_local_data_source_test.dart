@@ -28,7 +28,8 @@ class TestSearchLocalDataSource implements SearchLocalDataSource {
         .where((doc) =>
             doc.title.toLowerCase().contains(query.toLowerCase()) ||
             doc.content.toLowerCase().contains(query.toLowerCase()) ||
-            (doc.category?.toLowerCase().contains(query.toLowerCase()) ?? false))
+            (doc.category?.toLowerCase().contains(query.toLowerCase()) ??
+                false))
         .toList();
   }
 
@@ -54,7 +55,8 @@ class TestSearchLocalDataSource implements SearchLocalDataSource {
     final initialLength = _documents.length;
     _documents.removeWhere((doc) => doc.id == id);
     if (_documents.length == initialLength) {
-      throw Exception('Failed to delete document with ID: $id. Document may not exist.');
+      throw Exception(
+          'Failed to delete document with ID: $id. Document may not exist.');
     }
   }
 
@@ -102,11 +104,19 @@ class TestSearchLocalDataSource implements SearchLocalDataSource {
     }
 
     if (startDate != null) {
-      results = results.where((doc) => doc.updatedAt.isAfter(startDate) || doc.updatedAt.isAtSameMomentAs(startDate)).toList();
+      results = results
+          .where((doc) =>
+              doc.updatedAt.isAfter(startDate) ||
+              doc.updatedAt.isAtSameMomentAs(startDate))
+          .toList();
     }
 
     if (endDate != null) {
-      results = results.where((doc) => doc.updatedAt.isBefore(endDate) || doc.updatedAt.isAtSameMomentAs(endDate)).toList();
+      results = results
+          .where((doc) =>
+              doc.updatedAt.isBefore(endDate) ||
+              doc.updatedAt.isAtSameMomentAs(endDate))
+          .toList();
     }
 
     // Apply sorting
@@ -155,7 +165,8 @@ class TestSearchLocalDataSource implements SearchLocalDataSource {
   Future<List<String>> suggestCategories(String input) async {
     final categories = await getAllCategories();
     return categories
-        .where((category) => category.toLowerCase().contains(input.toLowerCase()))
+        .where(
+            (category) => category.toLowerCase().contains(input.toLowerCase()))
         .take(5)
         .toList();
   }
@@ -180,12 +191,14 @@ class TestSearchLocalDataSource implements SearchLocalDataSource {
       }
     }
     if (failedDeletes.isNotEmpty) {
-      throw Exception('Failed to delete documents with IDs: $failedDeletes. Documents may not exist.');
+      throw Exception(
+          'Failed to delete documents with IDs: $failedDeletes. Documents may not exist.');
     }
   }
 
   @override
-  Future<List<DocumentModel>> updateMultipleDocuments(List<DocumentModel> documents) async {
+  Future<List<DocumentModel>> updateMultipleDocuments(
+      List<DocumentModel> documents) async {
     final updatedDocs = <DocumentModel>[];
     for (final document in documents) {
       final updated = await updateDocument(document);
@@ -289,7 +302,7 @@ void main() {
         // assert
         expect(result.id, isNotNull);
         expect(result.title, equals('New Document'));
-        
+
         // Verify it's stored
         final stored = await dataSource.getDocumentById(result.id);
         expect(stored, isNotNull);
@@ -307,7 +320,7 @@ void main() {
 
         // assert
         expect(result.title, equals('Updated Title'));
-        
+
         // Verify it's updated in storage
         final stored = await dataSource.getDocumentById(addedDoc.id);
         expect(stored!.title, equals('Updated Title'));
@@ -450,7 +463,8 @@ void main() {
     });
 
     group('getDocumentsByTags', () {
-      test('should return documents that contain any of the specified tags', () async {
+      test('should return documents that contain any of the specified tags',
+          () async {
         // arrange
         for (final doc in testDocuments) {
           await dataSource.addDocument(doc);
@@ -494,7 +508,8 @@ void main() {
         expect(result2, isNull);
       });
 
-      test('should throw exception when some documents cannot be deleted', () async {
+      test('should throw exception when some documents cannot be deleted',
+          () async {
         // arrange
         final doc1 = await dataSource.addDocument(testDocuments[0]);
 
@@ -511,7 +526,7 @@ void main() {
         // arrange
         final doc1 = await dataSource.addDocument(testDocuments[0]);
         final doc2 = await dataSource.addDocument(testDocuments[1]);
-        
+
         final updatedDocs = [
           doc1.copyWith(title: 'Updated Title 1'),
           doc2.copyWith(title: 'Updated Title 2'),
@@ -549,7 +564,8 @@ void main() {
         }
 
         // act
-        final result = await dataSource.searchWithFilters(category: 'Category 2');
+        final result =
+            await dataSource.searchWithFilters(category: 'Category 2');
 
         // assert
         expect(result.length, equals(1));

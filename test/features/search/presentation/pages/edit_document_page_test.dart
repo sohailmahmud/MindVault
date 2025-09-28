@@ -30,10 +30,11 @@ void main() {
       createdAt: DateTime(2024, 1, 1),
       updatedAt: DateTime(2024, 1, 2),
     );
-    
+
     // Set up default bloc behavior
     when(() => mockSearchBloc.state).thenReturn(SearchInitial());
-    when(() => mockSearchBloc.stream).thenAnswer((_) => Stream.fromIterable([SearchInitial()]));
+    when(() => mockSearchBloc.stream)
+        .thenAnswer((_) => Stream.fromIterable([SearchInitial()]));
   });
 
   Widget createWidgetUnderTest() {
@@ -47,7 +48,8 @@ void main() {
 
   group('EditDocumentPage Tests', () {
     group('Widget Rendering', () {
-      testWidgets('should display document information correctly', (tester) async {
+      testWidgets('should display document information correctly',
+          (tester) async {
         // arrange
         await tester.pumpWidget(createWidgetUnderTest());
 
@@ -89,7 +91,8 @@ void main() {
         // assert
         expect(find.text('Save Changes'), findsOneWidget);
         expect(find.text('Delete Document'), findsOneWidget);
-        expect(find.byIcon(Icons.delete), findsNWidgets(2)); // AppBar and button
+        expect(
+            find.byIcon(Icons.delete), findsNWidgets(2)); // AppBar and button
         expect(find.text('Save'), findsOneWidget); // AppBar save button
       });
     });
@@ -128,31 +131,36 @@ void main() {
     });
 
     group('BLoC State Handling', () {
-      testWidgets('should show loading indicator when state is SearchLoading', (tester) async {
+      testWidgets('should show loading indicator when state is SearchLoading',
+          (tester) async {
         // arrange
         when(() => mockSearchBloc.state).thenReturn(SearchLoading());
-        when(() => mockSearchBloc.stream).thenAnswer((_) => Stream.fromIterable([SearchLoading()]));
+        when(() => mockSearchBloc.stream)
+            .thenAnswer((_) => Stream.fromIterable([SearchLoading()]));
 
         await tester.pumpWidget(createWidgetUnderTest());
 
         // assert
-        expect(find.byType(CircularProgressIndicator), findsNWidgets(2)); // Both overlay and button
+        expect(find.byType(CircularProgressIndicator),
+            findsNWidgets(2)); // Both overlay and button
       });
 
       testWidgets('should disable buttons when loading', (tester) async {
         // arrange
         when(() => mockSearchBloc.state).thenReturn(SearchLoading());
-        when(() => mockSearchBloc.stream).thenAnswer((_) => Stream.fromIterable([SearchLoading()]));
+        when(() => mockSearchBloc.stream)
+            .thenAnswer((_) => Stream.fromIterable([SearchLoading()]));
 
         await tester.pumpWidget(createWidgetUnderTest());
 
         // assert
         final saveButton = find.widgetWithText(ElevatedButton, 'Save Changes');
-        final deleteButton = find.widgetWithText(OutlinedButton, 'Delete Document');
-        
+        final deleteButton =
+            find.widgetWithText(OutlinedButton, 'Delete Document');
+
         final saveButtonWidget = tester.widget<ElevatedButton>(saveButton);
         final deleteButtonWidget = tester.widget<OutlinedButton>(deleteButton);
-        
+
         expect(saveButtonWidget.onPressed, isNull);
         expect(deleteButtonWidget.onPressed, isNull);
       });
@@ -169,10 +177,13 @@ void main() {
 
         // assert
         expect(find.byType(AlertDialog), findsOneWidget);
-        expect(find.text('Delete Document'), findsNWidgets(2)); // Dialog title and button
-        expect(find.textContaining('Are you sure you want to delete'), findsOneWidget);
+        expect(find.text('Delete Document'),
+            findsNWidgets(2)); // Dialog title and button
+        expect(find.textContaining('Are you sure you want to delete'),
+            findsOneWidget);
         expect(find.text('Cancel'), findsOneWidget);
-        expect(find.text('Delete'), findsNWidgets(2)); // Dialog button and page button
+        expect(find.text('Delete'),
+            findsNWidgets(2)); // Dialog button and page button
       });
 
       testWidgets('should close dialog when cancel is tapped', (tester) async {
@@ -182,9 +193,9 @@ void main() {
         // act
         await tester.tap(find.text('Delete Document'));
         await tester.pumpAndSettle();
-        
+
         expect(find.byType(AlertDialog), findsOneWidget);
-        
+
         await tester.tap(find.text('Cancel'));
         await tester.pumpAndSettle();
 
@@ -194,10 +205,12 @@ void main() {
     });
 
     group('Field Content Display', () {
-      testWidgets('should display empty category when document has null category', (tester) async {
+      testWidgets(
+          'should display empty category when document has null category',
+          (tester) async {
         // arrange
         final docWithoutCategory = testDocument.copyWith(category: null);
-        
+
         final widget = MaterialApp(
           home: BlocProvider<SearchBloc>(
             create: (_) => mockSearchBloc,
@@ -209,16 +222,17 @@ void main() {
 
         // assert - Look for the category field by finding the label text
         expect(find.text('Category (Optional)'), findsOneWidget);
-        
+
         // The text field should not contain any initial text for null category
         final formFields = find.byType(TextFormField);
         expect(formFields, findsNWidgets(4));
       });
 
-      testWidgets('should display empty tags when document has no tags', (tester) async {
+      testWidgets('should display empty tags when document has no tags',
+          (tester) async {
         // arrange
         final docWithoutTags = testDocument.copyWith(tags: []);
-        
+
         final widget = MaterialApp(
           home: BlocProvider<SearchBloc>(
             create: (_) => mockSearchBloc,
@@ -230,7 +244,7 @@ void main() {
 
         // assert - Look for the tags field by finding the label text
         expect(find.text('Tags (Optional)'), findsOneWidget);
-        
+
         // The form should render with empty tags field
         final formFields = find.byType(TextFormField);
         expect(formFields, findsNWidgets(4));
@@ -238,7 +252,8 @@ void main() {
     });
 
     group('AppBar Actions', () {
-      testWidgets('should have delete and save buttons in app bar', (tester) async {
+      testWidgets('should have delete and save buttons in app bar',
+          (tester) async {
         // arrange
         await tester.pumpWidget(createWidgetUnderTest());
 
@@ -249,14 +264,17 @@ void main() {
     });
 
     group('Accessibility', () {
-      testWidgets('should provide proper semantics for screen readers', (tester) async {
+      testWidgets('should provide proper semantics for screen readers',
+          (tester) async {
         // arrange
         await tester.pumpWidget(createWidgetUnderTest());
 
         // assert
         expect(find.byTooltip('Delete Document'), findsOneWidget);
-        expect(find.text('Title *'), findsOneWidget); // Required field indicator
-        expect(find.text('Content *'), findsOneWidget); // Required field indicator
+        expect(
+            find.text('Title *'), findsOneWidget); // Required field indicator
+        expect(
+            find.text('Content *'), findsOneWidget); // Required field indicator
       });
     });
   });

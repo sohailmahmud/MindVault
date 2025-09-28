@@ -41,7 +41,8 @@ void main() {
   });
 
   group('GetAllDocuments', () {
-    test('should return all documents when repository call is successful', () async {
+    test('should return all documents when repository call is successful',
+        () async {
       // arrange
       when(() => mockSearchRepository.getAllDocuments())
           .thenAnswer((_) async => Right(testDocuments));
@@ -55,7 +56,8 @@ void main() {
       verifyNoMoreInteractions(mockSearchRepository);
     });
 
-    test('should return failure when repository call is unsuccessful', () async {
+    test('should return failure when repository call is unsuccessful',
+        () async {
       // arrange
       final failure = DatabaseFailure('Failed to get documents');
       when(() => mockSearchRepository.getAllDocuments())

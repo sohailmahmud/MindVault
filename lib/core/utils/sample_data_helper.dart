@@ -34,7 +34,11 @@ class SampleDataHelper {
         content:
             "Clean architecture is a software design philosophy that separates the concerns of a software application into distinct layers. It promotes testability, maintainability, and independence from frameworks and external dependencies.",
         category: "Architecture",
-        tags: const ["clean-architecture", "design-patterns", "software-engineering"],
+        tags: const [
+          "clean-architecture",
+          "design-patterns",
+          "software-engineering"
+        ],
         createdAt: DateTime.now().subtract(const Duration(days: 3)),
         updatedAt: DateTime.now().subtract(const Duration(days: 1)),
       ),

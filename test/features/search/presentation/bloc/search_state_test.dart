@@ -56,7 +56,7 @@ void main() {
       test('should create SearchLoaded with required documents', () {
         final documents = [testDocument, testDocument2];
         final state = SearchLoaded(documents: documents);
-        
+
         expect(state, isA<SearchState>());
         expect(state.documents, equals(documents));
         expect(state.searchQuery, isNull);
@@ -73,7 +73,7 @@ void main() {
         const selectedIds = {1, 2, 3};
         const categories = ['Work', 'Personal'];
         const tags = ['important', 'urgent'];
-        
+
         final state = SearchLoaded(
           documents: documents,
           searchQuery: searchQuery,
@@ -98,7 +98,7 @@ void main() {
         const selectedIds = {1, 2};
         const categories = ['Work'];
         const tags = ['important'];
-        
+
         final state = SearchLoaded(
           documents: documents,
           searchQuery: searchQuery,
@@ -108,22 +108,25 @@ void main() {
           availableTags: tags,
         );
 
-        expect(state.props, equals([
-          documents,
-          searchQuery,
-          isSemanticSearch,
-          selectedIds,
-          categories,
-          tags,
-        ]));
+        expect(
+            state.props,
+            equals([
+              documents,
+              searchQuery,
+              isSemanticSearch,
+              selectedIds,
+              categories,
+              tags,
+            ]));
       });
 
       test('should support equality comparison', () {
         final documents = [testDocument];
         final state1 = SearchLoaded(documents: documents, searchQuery: 'test');
         final state2 = SearchLoaded(documents: documents, searchQuery: 'test');
-        final state3 = SearchLoaded(documents: documents, searchQuery: 'different');
-        
+        final state3 =
+            SearchLoaded(documents: documents, searchQuery: 'different');
+
         expect(state1, equals(state2));
         expect(state1, isNot(equals(state3)));
       });
@@ -155,14 +158,16 @@ void main() {
         expect(copiedState.selectedDocumentIds, equals(const {2, 3}));
         expect(copiedState.availableCategories, equals(const ['Personal']));
         expect(copiedState.availableTags, equals(const ['tag2']));
-        
+
         // Original should remain unchanged
         expect(originalState.documents, equals(originalDocuments));
         expect(originalState.searchQuery, equals('original'));
         expect(originalState.isSemanticSearch, isFalse);
       });
 
-      test('copyWith should preserve original values when no parameters provided', () {
+      test(
+          'copyWith should preserve original values when no parameters provided',
+          () {
         final documents = [testDocument];
         final originalState = SearchLoaded(
           documents: documents,
@@ -195,7 +200,8 @@ void main() {
 
         expect(copiedState.documents, equals(documents));
         expect(copiedState.searchQuery, equals('updated'));
-        expect(copiedState.isSemanticSearch, isFalse); // Should remain unchanged
+        expect(
+            copiedState.isSemanticSearch, isFalse); // Should remain unchanged
       });
     });
 
@@ -203,7 +209,7 @@ void main() {
       test('should create SearchError with message', () {
         const message = 'Something went wrong';
         const state = SearchError(message);
-        
+
         expect(state, isA<SearchState>());
         expect(state.message, equals(message));
         expect(state.props, equals([message]));
@@ -213,7 +219,7 @@ void main() {
         const state1 = SearchError('error');
         const state2 = SearchError('error');
         const state3 = SearchError('different error');
-        
+
         expect(state1, equals(state2));
         expect(state1, isNot(equals(state3)));
       });
@@ -222,7 +228,7 @@ void main() {
     group('DocumentAdded', () {
       test('should create DocumentAdded with document', () {
         final state = DocumentAdded(testDocument);
-        
+
         expect(state, isA<SearchState>());
         expect(state.document, equals(testDocument));
         expect(state.props, equals([testDocument]));
@@ -232,7 +238,7 @@ void main() {
         final state1 = DocumentAdded(testDocument);
         final state2 = DocumentAdded(testDocument);
         final state3 = DocumentAdded(testDocument2);
-        
+
         expect(state1, equals(state2));
         expect(state1, isNot(equals(state3)));
       });
@@ -241,7 +247,7 @@ void main() {
     group('DocumentUpdated', () {
       test('should create DocumentUpdated with document', () {
         final state = DocumentUpdated(testDocument);
-        
+
         expect(state, isA<SearchState>());
         expect(state.document, equals(testDocument));
         expect(state.props, equals([testDocument]));
@@ -251,7 +257,7 @@ void main() {
         final state1 = DocumentUpdated(testDocument);
         final state2 = DocumentUpdated(testDocument);
         final state3 = DocumentUpdated(testDocument2);
-        
+
         expect(state1, equals(state2));
         expect(state1, isNot(equals(state3)));
       });
@@ -261,7 +267,7 @@ void main() {
       test('should create DocumentDeleted with document ID', () {
         const documentId = 123;
         const state = DocumentDeleted(documentId);
-        
+
         expect(state, isA<SearchState>());
         expect(state.documentId, equals(documentId));
         expect(state.props, equals([documentId]));
@@ -271,7 +277,7 @@ void main() {
         const state1 = DocumentDeleted(123);
         const state2 = DocumentDeleted(123);
         const state3 = DocumentDeleted(456);
-        
+
         expect(state1, equals(state2));
         expect(state1, isNot(equals(state3)));
       });
@@ -281,7 +287,7 @@ void main() {
       test('should create MultipleDocumentsDeleted with document IDs', () {
         const documentIds = [1, 2, 3];
         const state = MultipleDocumentsDeleted(documentIds);
-        
+
         expect(state, isA<SearchState>());
         expect(state.documentIds, equals(documentIds));
         expect(state.props, equals([documentIds]));
@@ -291,7 +297,7 @@ void main() {
         const state1 = MultipleDocumentsDeleted([1, 2, 3]);
         const state2 = MultipleDocumentsDeleted([1, 2, 3]);
         const state3 = MultipleDocumentsDeleted([4, 5, 6]);
-        
+
         expect(state1, equals(state2));
         expect(state1, isNot(equals(state3)));
       });
@@ -301,7 +307,7 @@ void main() {
       test('should create CategoriesLoaded with categories list', () {
         const categories = ['Work', 'Personal', 'Study'];
         const state = CategoriesLoaded(categories);
-        
+
         expect(state, isA<SearchState>());
         expect(state.categories, equals(categories));
         expect(state.props, equals([categories]));
@@ -311,7 +317,7 @@ void main() {
         const state1 = CategoriesLoaded(['Work', 'Personal']);
         const state2 = CategoriesLoaded(['Work', 'Personal']);
         const state3 = CategoriesLoaded(['Study', 'Projects']);
-        
+
         expect(state1, equals(state2));
         expect(state1, isNot(equals(state3)));
       });
@@ -321,7 +327,7 @@ void main() {
       test('should create TagsLoaded with tags list', () {
         const tags = ['important', 'urgent', 'meeting'];
         const state = TagsLoaded(tags);
-        
+
         expect(state, isA<SearchState>());
         expect(state.tags, equals(tags));
         expect(state.props, equals([tags]));
@@ -331,7 +337,7 @@ void main() {
         const state1 = TagsLoaded(['important', 'urgent']);
         const state2 = TagsLoaded(['important', 'urgent']);
         const state3 = TagsLoaded(['meeting', 'deadline']);
-        
+
         expect(state1, equals(state2));
         expect(state1, isNot(equals(state3)));
       });

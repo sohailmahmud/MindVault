@@ -17,13 +17,15 @@ void main() {
       await tester.pumpAndSettle();
 
       const documentTitle = 'CRUD Test Document';
-      const documentContent = 'This document will be created, read, updated, and deleted.';
+      const documentContent =
+          'This document will be created, read, updated, and deleted.';
 
       await tester.enterText(find.byType(TextFormField).first, documentTitle);
       await tester.enterText(find.byType(TextFormField).at(1), documentContent);
 
       // Scroll to find category if needed
-      await tester.drag(find.byType(SingleChildScrollView), const Offset(0, -200));
+      await tester.drag(
+          find.byType(SingleChildScrollView), const Offset(0, -200));
       await tester.pumpAndSettle();
 
       // Select category
@@ -90,15 +92,28 @@ void main() {
       }
     });
 
-    testWidgets('Document categories and filtering', (WidgetTester tester) async {
+    testWidgets('Document categories and filtering',
+        (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
 
       // Create documents with different categories
       final testDocuments = [
-        {'title': 'Work Report', 'content': 'Quarterly report content', 'category': 'Work'},
-        {'title': 'Personal Note', 'content': 'Personal thoughts and ideas', 'category': 'Personal'},
-        {'title': 'Study Material', 'content': 'Learning notes about Flutter', 'category': 'Study'},
+        {
+          'title': 'Work Report',
+          'content': 'Quarterly report content',
+          'category': 'Work'
+        },
+        {
+          'title': 'Personal Note',
+          'content': 'Personal thoughts and ideas',
+          'category': 'Personal'
+        },
+        {
+          'title': 'Study Material',
+          'content': 'Learning notes about Flutter',
+          'category': 'Study'
+        },
       ];
 
       for (final doc in testDocuments) {
@@ -106,10 +121,12 @@ void main() {
         await tester.pumpAndSettle();
 
         await tester.enterText(find.byType(TextFormField).first, doc['title']!);
-        await tester.enterText(find.byType(TextFormField).at(1), doc['content']!);
+        await tester.enterText(
+            find.byType(TextFormField).at(1), doc['content']!);
 
         // Scroll to find category dropdown
-        await tester.drag(find.byType(SingleChildScrollView), const Offset(0, -200));
+        await tester.drag(
+            find.byType(SingleChildScrollView), const Offset(0, -200));
         await tester.pumpAndSettle();
 
         await tester.tap(find.text('Category'));
@@ -128,7 +145,8 @@ void main() {
       }
 
       // Test search by category-related content
-      final searchField = find.widgetWithText(TextField, 'Search documents...').first;
+      final searchField =
+          find.widgetWithText(TextField, 'Search documents...').first;
       await tester.enterText(searchField, 'work');
       await tester.testTextInput.receiveAction(TextInputAction.done);
       await tester.pumpAndSettle();
@@ -152,7 +170,8 @@ void main() {
       // (Results depend on AI implementation)
     });
 
-    testWidgets('Document validation and error handling', (WidgetTester tester) async {
+    testWidgets('Document validation and error handling',
+        (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
 
@@ -173,7 +192,8 @@ void main() {
       expect(find.text('Please enter some content'), findsOneWidget);
 
       // Test valid document creation
-      await tester.enterText(find.byType(TextFormField).at(1), 'Valid content for the document.');
+      await tester.enterText(
+          find.byType(TextFormField).at(1), 'Valid content for the document.');
       await tester.tap(find.text('Save Document'));
       await tester.pumpAndSettle();
       await tester.pumpAndSettle(const Duration(seconds: 2));
@@ -199,7 +219,8 @@ void main() {
       Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
       ''';
 
-      await tester.enterText(find.byType(TextFormField).first, 'Long Document Test');
+      await tester.enterText(
+          find.byType(TextFormField).first, 'Long Document Test');
       await tester.enterText(find.byType(TextFormField).at(1), longContent);
 
       await tester.tap(find.text('Save Document'));
@@ -215,10 +236,12 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify content is displayed (at least partially)
-      expect(find.textContaining('This is a very long document'), findsOneWidget);
+      expect(
+          find.textContaining('This is a very long document'), findsOneWidget);
 
       // Test scrolling in document details
-      await tester.drag(find.byType(SingleChildScrollView), const Offset(0, -300));
+      await tester.drag(
+          find.byType(SingleChildScrollView), const Offset(0, -300));
       await tester.pumpAndSettle();
 
       // Should still be on the document details page

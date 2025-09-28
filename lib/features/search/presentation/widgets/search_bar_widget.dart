@@ -51,7 +51,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
         } else {
           // Cancel previous timer
           _debounceTimer?.cancel();
-          
+
           // Start new timer for delayed search
           _debounceTimer = Timer(const Duration(milliseconds: 500), () {
             if (widget.controller.text == value && mounted) {

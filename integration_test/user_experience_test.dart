@@ -7,18 +7,19 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('User Experience and Performance Integration Tests', () {
-    testWidgets('App startup performance and initialization', (WidgetTester tester) async {
+    testWidgets('App startup performance and initialization',
+        (WidgetTester tester) async {
       // Measure app startup time
       final stopwatch = Stopwatch()..start();
-      
+
       app.main();
       await tester.pumpAndSettle();
-      
+
       stopwatch.stop();
-      
+
       // Verify app starts within reasonable time (5 seconds)
       expect(stopwatch.elapsedMilliseconds, lessThan(5000));
-      
+
       // Verify all main components are initialized
       expect(find.text('MindVault'), findsOneWidget);
       expect(find.byIcon(Icons.search), findsOneWidget);
@@ -27,7 +28,8 @@ void main() {
       expect(find.text('AI Search'), findsOneWidget);
     });
 
-    testWidgets('Navigation responsiveness and UI feedback', (WidgetTester tester) async {
+    testWidgets('Navigation responsiveness and UI feedback',
+        (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
 
@@ -56,57 +58,62 @@ void main() {
       expect(find.text('MindVault'), findsOneWidget);
     });
 
-    testWidgets('Memory usage with many documents', (WidgetTester tester) async {
+    testWidgets('Memory usage with many documents',
+        (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
 
       // Create many documents to test memory usage
       const documentCount = 50;
-      
+
       for (int i = 1; i <= documentCount; i++) {
         await tester.tap(find.byIcon(Icons.add));
         await tester.pumpAndSettle();
 
-        await tester.enterText(find.byType(TextFormField).first, 'Memory Test Document $i');
-        await tester.enterText(find.byType(TextFormField).at(1), 'Content for memory test document $i. This document contains enough text to test memory usage patterns.');
+        await tester.enterText(
+            find.byType(TextFormField).first, 'Memory Test Document $i');
+        await tester.enterText(find.byType(TextFormField).at(1),
+            'Content for memory test document $i. This document contains enough text to test memory usage patterns.');
 
         await tester.tap(find.text('Save Document'));
         await tester.pumpAndSettle();
-        
+
         // Only wait briefly to speed up test
         await tester.pump(const Duration(milliseconds: 100));
       }
 
       // Test scrolling performance with many documents
       final scrollStopwatch = Stopwatch()..start();
-      
+
       // Scroll through the document list
       for (int scroll = 0; scroll < 10; scroll++) {
         await tester.drag(find.byType(ListView), const Offset(0, -200));
         await tester.pump();
       }
-      
+
       scrollStopwatch.stop();
-      
+
       // Scrolling should remain responsive
       expect(scrollStopwatch.elapsedMilliseconds, lessThan(2000));
 
       // Test search performance with many documents
       final searchStopwatch = Stopwatch()..start();
-      
-      final searchField = find.widgetWithText(TextField, 'Search documents...').first;
+
+      final searchField =
+          find.widgetWithText(TextField, 'Search documents...').first;
       await tester.enterText(searchField, 'Memory Test');
       await tester.testTextInput.receiveAction(TextInputAction.done);
       await tester.pumpAndSettle();
-      
+
       searchStopwatch.stop();
-      
+
       // Search should complete reasonably quickly
       expect(searchStopwatch.elapsedMilliseconds, lessThan(3000));
       expect(find.textContaining('results found'), findsOneWidget);
     });
 
-    testWidgets('UI theme consistency and accessibility', (WidgetTester tester) async {
+    testWidgets('UI theme consistency and accessibility',
+        (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
 
@@ -122,12 +129,14 @@ void main() {
       final addDocumentTheme = Theme.of(tester.element(find.byType(AppBar)));
 
       // Verify theme consistency
-      expect(addDocumentAppBar.backgroundColor, equals(mainAppBar.backgroundColor));
-      expect(addDocumentTheme.colorScheme.primary, equals(mainTheme.colorScheme.primary));
+      expect(addDocumentAppBar.backgroundColor,
+          equals(mainAppBar.backgroundColor));
+      expect(addDocumentTheme.colorScheme.primary,
+          equals(mainTheme.colorScheme.primary));
 
       // Test accessibility elements
       expect(find.byType(TextFormField), findsAtLeastNWidgets(2));
-      
+
       // Check for semantic labels by looking for label text
       expect(find.text('Title *'), findsOneWidget);
       expect(find.text('Content'), findsOneWidget);
@@ -135,7 +144,7 @@ void main() {
       // Test form validation accessibility
       await tester.tap(find.text('Save Document'));
       await tester.pumpAndSettle();
-      
+
       expect(find.text('Please enter a title'), findsOneWidget);
 
       // Go back to main screen
@@ -145,12 +154,13 @@ void main() {
       // Test contrast and visibility
       final searchBar = find.widgetWithText(TextField, 'Search documents...');
       expect(searchBar, findsOneWidget);
-      
+
       final textField = tester.widget<TextField>(searchBar.first);
       expect(textField.decoration?.hintText, equals('Search documents...'));
     });
 
-    testWidgets('Error recovery and app stability', (WidgetTester tester) async {
+    testWidgets('Error recovery and app stability',
+        (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
 
@@ -181,7 +191,7 @@ void main() {
       // Test selection mode stability
       await tester.tap(find.byIcon(Icons.checklist));
       await tester.pumpAndSettle();
-      
+
       // Rapidly toggle selection mode
       for (int i = 0; i < 3; i++) {
         await tester.tap(find.byIcon(Icons.close));
@@ -197,7 +207,8 @@ void main() {
       expect(find.text('MindVault'), findsOneWidget);
     });
 
-    testWidgets('Database persistence and data integrity', (WidgetTester tester) async {
+    testWidgets('Database persistence and data integrity',
+        (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
 
@@ -206,7 +217,8 @@ void main() {
       await tester.pumpAndSettle();
 
       const testTitle = 'Persistence Test Document';
-      const testContent = 'This document tests data persistence across app sessions.';
+      const testContent =
+          'This document tests data persistence across app sessions.';
 
       await tester.enterText(find.byType(TextFormField).first, testTitle);
       await tester.enterText(find.byType(TextFormField).at(1), testContent);
@@ -230,7 +242,8 @@ void main() {
       await tester.pumpAndSettle();
 
       // Test search functionality with persisted data
-      final searchField = find.widgetWithText(TextField, 'Search documents...').first;
+      final searchField =
+          find.widgetWithText(TextField, 'Search documents...').first;
       await tester.enterText(searchField, 'persistence');
       await tester.testTextInput.receiveAction(TextInputAction.done);
       await tester.pumpAndSettle();
@@ -244,7 +257,8 @@ void main() {
       expect(find.text(testTitle), findsOneWidget);
     });
 
-    testWidgets('Offline functionality and local storage', (WidgetTester tester) async {
+    testWidgets('Offline functionality and local storage',
+        (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
 
@@ -261,7 +275,11 @@ void main() {
         await tester.pumpAndSettle();
 
         await tester.enterText(find.byType(TextFormField).first, docTitle);
-        await tester.enterText(find.byType(TextFormField).at(1, ), 'Content for $docTitle stored locally.');
+        await tester.enterText(
+            find.byType(TextFormField).at(
+                  1,
+                ),
+            'Content for $docTitle stored locally.');
 
         await tester.tap(find.text('Save Document'));
         await tester.pumpAndSettle();
@@ -274,7 +292,8 @@ void main() {
       }
 
       // Test search works offline
-      final searchField = find.widgetWithText(TextField, 'Search documents...').first;
+      final searchField =
+          find.widgetWithText(TextField, 'Search documents...').first;
       await tester.enterText(searchField, 'offline');
       await tester.testTextInput.receiveAction(TextInputAction.done);
       await tester.pumpAndSettle();

@@ -8,17 +8,18 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('MindVault Integration Tests', () {
-    testWidgets('App startup and basic navigation', (WidgetTester tester) async {
+    testWidgets('App startup and basic navigation',
+        (WidgetTester tester) async {
       // Start the app
       app.main();
       await tester.pumpAndSettle();
 
       // Verify app starts with MindVault title
       expect(find.text('MindVault'), findsOneWidget);
-      
+
       // Verify search bar is present
       expect(find.text('Search documents...'), findsOneWidget);
-      
+
       // Verify main UI elements are present
       expect(find.byIcon(Icons.search), findsOneWidget);
       expect(find.byIcon(Icons.clear), findsOneWidget);
@@ -40,11 +41,14 @@ void main() {
       expect(find.text('Content'), findsOneWidget);
 
       // Fill in document details
-      await tester.enterText(find.byType(TextFormField).first, 'Integration Test Document');
-      await tester.enterText(find.byType(TextFormField).at(1), 'This is a test document created during integration testing.');
+      await tester.enterText(
+          find.byType(TextFormField).first, 'Integration Test Document');
+      await tester.enterText(find.byType(TextFormField).at(1),
+          'This is a test document created during integration testing.');
 
       // Scroll down to find category dropdown if needed
-      await tester.drag(find.byType(SingleChildScrollView), const Offset(0, -200));
+      await tester.drag(
+          find.byType(SingleChildScrollView), const Offset(0, -200));
       await tester.pumpAndSettle();
 
       // Select a category
@@ -60,10 +64,10 @@ void main() {
       // Verify we're back on the main page and document was created
       expect(find.text('MindVault'), findsOneWidget);
       expect(find.text('Document added successfully!'), findsOneWidget);
-      
+
       // Wait for the snackbar to disappear
       await tester.pumpAndSettle(const Duration(seconds: 5));
-      
+
       // Verify the document appears in the list
       expect(find.text('Integration Test Document'), findsOneWidget);
     });
@@ -76,16 +80,19 @@ void main() {
       // First, ensure we have some documents by adding one
       await tester.tap(find.byIcon(Icons.add));
       await tester.pumpAndSettle();
-      
-      await tester.enterText(find.byType(TextFormField).first, 'Searchable Document');
-      await tester.enterText(find.byType(TextFormField).at(1), 'This document contains searchable content about flutter development.');
-      
+
+      await tester.enterText(
+          find.byType(TextFormField).first, 'Searchable Document');
+      await tester.enterText(find.byType(TextFormField).at(1),
+          'This document contains searchable content about flutter development.');
+
       await tester.tap(find.text('Save Document'));
       await tester.pumpAndSettle();
       await tester.pumpAndSettle(const Duration(seconds: 3));
 
       // Now test search functionality
-      final searchField = find.widgetWithText(TextField, 'Search documents...').first;
+      final searchField =
+          find.widgetWithText(TextField, 'Search documents...').first;
       await tester.enterText(searchField, 'searchable');
       await tester.testTextInput.receiveAction(TextInputAction.done);
       await tester.pumpAndSettle();
@@ -140,10 +147,12 @@ void main() {
       // Add a document first
       await tester.tap(find.byIcon(Icons.add));
       await tester.pumpAndSettle();
-      
-      await tester.enterText(find.byType(TextFormField).first, 'Detail Test Document');
-      await tester.enterText(find.byType(TextFormField).at(1), 'This document will be used to test the details view navigation.');
-      
+
+      await tester.enterText(
+          find.byType(TextFormField).first, 'Detail Test Document');
+      await tester.enterText(find.byType(TextFormField).at(1),
+          'This document will be used to test the details view navigation.');
+
       await tester.tap(find.text('Save Document'));
       await tester.pumpAndSettle();
       await tester.pumpAndSettle(const Duration(seconds: 3));
@@ -154,7 +163,10 @@ void main() {
 
       // Verify we're on the document details page
       expect(find.text('Detail Test Document'), findsAtLeastNWidgets(1));
-      expect(find.text('This document will be used to test the details view navigation.'), findsOneWidget);
+      expect(
+          find.text(
+              'This document will be used to test the details view navigation.'),
+          findsOneWidget);
 
       // Navigate back
       await tester.tap(find.byIcon(Icons.arrow_back));
@@ -164,7 +176,8 @@ void main() {
       expect(find.text('MindVault'), findsOneWidget);
     });
 
-    testWidgets('Selection mode and bulk operations', (WidgetTester tester) async {
+    testWidgets('Selection mode and bulk operations',
+        (WidgetTester tester) async {
       // Start the app
       app.main();
       await tester.pumpAndSettle();
@@ -173,10 +186,12 @@ void main() {
       for (int i = 1; i <= 2; i++) {
         await tester.tap(find.byIcon(Icons.add));
         await tester.pumpAndSettle();
-        
-        await tester.enterText(find.byType(TextFormField).first, 'Test Document $i');
-        await tester.enterText(find.byType(TextFormField).at(1), 'Content for test document number $i.');
-        
+
+        await tester.enterText(
+            find.byType(TextFormField).first, 'Test Document $i');
+        await tester.enterText(find.byType(TextFormField).at(1),
+            'Content for test document number $i.');
+
         await tester.tap(find.text('Save Document'));
         await tester.pumpAndSettle();
         await tester.pumpAndSettle(const Duration(seconds: 2));
@@ -242,7 +257,8 @@ void main() {
       expect(find.text('MindVault'), findsOneWidget);
     });
 
-    testWidgets('App theme and visual consistency', (WidgetTester tester) async {
+    testWidgets('App theme and visual consistency',
+        (WidgetTester tester) async {
       // Start the app
       app.main();
       await tester.pumpAndSettle();
@@ -252,9 +268,11 @@ void main() {
       expect(appBar.backgroundColor, isNotNull);
 
       // Check for consistent Material Design 3 elements
-      expect(find.byType(FloatingActionButton), findsNothing); // App uses IconButton instead
+      expect(find.byType(FloatingActionButton),
+          findsNothing); // App uses IconButton instead
       expect(find.byType(SearchBarWidget), findsOneWidget);
-      expect(find.byType(ChoiceChip), findsNWidgets(2)); // Text Search and AI Search chips
+      expect(find.byType(ChoiceChip),
+          findsNWidgets(2)); // Text Search and AI Search chips
 
       // Navigate to add document page to check consistency
       await tester.tap(find.byIcon(Icons.add));

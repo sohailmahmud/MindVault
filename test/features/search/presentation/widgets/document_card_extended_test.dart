@@ -45,7 +45,8 @@ void main() {
     }
 
     group('Document Display', () {
-      testWidgets('displays document title prominently', (WidgetTester tester) async {
+      testWidgets('displays document title prominently',
+          (WidgetTester tester) async {
         await tester.pumpWidget(createDocumentCard());
 
         final titleFinder = find.text('Test Document');
@@ -80,14 +81,16 @@ void main() {
         expect(find.byType(Chip), findsNWidgets(3));
       });
 
-      testWidgets('displays creation and update dates', (WidgetTester tester) async {
+      testWidgets('displays creation and update dates',
+          (WidgetTester tester) async {
         await tester.pumpWidget(createDocumentCard());
 
         // Should show some date information (format may vary)
         expect(find.byIcon(Icons.calendar_today), findsAtLeastNWidgets(1));
       });
 
-      testWidgets('handles document with null category', (WidgetTester tester) async {
+      testWidgets('handles document with null category',
+          (WidgetTester tester) async {
         final documentWithoutCategory = Document(
           id: 1,
           title: 'No Category Doc',
@@ -98,14 +101,16 @@ void main() {
           updatedAt: DateTime(2023, 1, 1),
         );
 
-        await tester.pumpWidget(createDocumentCard(document: documentWithoutCategory));
+        await tester
+            .pumpWidget(createDocumentCard(document: documentWithoutCategory));
 
         expect(find.text('No Category Doc'), findsOneWidget);
         // Should not crash when category is null
         expect(tester.takeException(), isNull);
       });
 
-      testWidgets('handles document with empty tags', (WidgetTester tester) async {
+      testWidgets('handles document with empty tags',
+          (WidgetTester tester) async {
         final documentWithoutTags = Document(
           id: 1,
           title: 'No Tags Doc',
@@ -116,33 +121,40 @@ void main() {
           updatedAt: DateTime(2023, 1, 1),
         );
 
-        await tester.pumpWidget(createDocumentCard(document: documentWithoutTags));
+        await tester
+            .pumpWidget(createDocumentCard(document: documentWithoutTags));
 
         expect(find.text('No Tags Doc'), findsOneWidget);
         expect(find.byType(Chip), findsNothing);
       });
 
-      testWidgets('truncates long content appropriately', (WidgetTester tester) async {
+      testWidgets('truncates long content appropriately',
+          (WidgetTester tester) async {
         final longContentDocument = Document(
           id: 1,
           title: 'Long Content Doc',
-          content: 'This is a very long content that should be truncated when displayed in the card preview. ' * 10,
+          content:
+              'This is a very long content that should be truncated when displayed in the card preview. ' *
+                  10,
           category: 'Long',
           tags: const ['long'],
           createdAt: DateTime(2023, 1, 1),
           updatedAt: DateTime(2023, 1, 1),
         );
 
-        await tester.pumpWidget(createDocumentCard(document: longContentDocument));
+        await tester
+            .pumpWidget(createDocumentCard(document: longContentDocument));
 
         expect(find.text('Long Content Doc'), findsOneWidget);
         // Content should be present but truncated (exact truncation depends on implementation)
-        expect(find.textContaining('This is a very long content'), findsOneWidget);
+        expect(
+            find.textContaining('This is a very long content'), findsOneWidget);
       });
     });
 
     group('Interaction Handling', () {
-      testWidgets('navigates to details when card is tapped (not selectable)', (WidgetTester tester) async {
+      testWidgets('navigates to details when card is tapped (not selectable)',
+          (WidgetTester tester) async {
         await tester.pumpWidget(createDocumentCard(
           isSelectable: false,
         ));
@@ -155,7 +167,8 @@ void main() {
         expect(tester.takeException(), isNull);
       });
 
-      testWidgets('calls onSelectionToggle when in selectable mode', (WidgetTester tester) async {
+      testWidgets('calls onSelectionToggle when in selectable mode',
+          (WidgetTester tester) async {
         bool selectionToggled = false;
 
         await tester.pumpWidget(createDocumentCard(
@@ -167,7 +180,8 @@ void main() {
         expect(selectionToggled, isTrue);
       });
 
-      testWidgets('shows selection indicator when selected', (WidgetTester tester) async {
+      testWidgets('shows selection indicator when selected',
+          (WidgetTester tester) async {
         await tester.pumpWidget(createDocumentCard(
           isSelected: true,
           isSelectable: true,
@@ -177,7 +191,8 @@ void main() {
         expect(find.byIcon(Icons.check_circle), findsOneWidget);
       });
 
-      testWidgets('shows different indicator when selectable but not selected', (WidgetTester tester) async {
+      testWidgets('shows different indicator when selectable but not selected',
+          (WidgetTester tester) async {
         await tester.pumpWidget(createDocumentCard(
           isSelected: false,
           isSelectable: true,
@@ -187,7 +202,8 @@ void main() {
         expect(find.byIcon(Icons.radio_button_unchecked), findsOneWidget);
       });
 
-      testWidgets('does not show selection indicators when not selectable', (WidgetTester tester) async {
+      testWidgets('does not show selection indicators when not selectable',
+          (WidgetTester tester) async {
         await tester.pumpWidget(createDocumentCard(
           isSelectable: false,
         ));
@@ -198,7 +214,8 @@ void main() {
     });
 
     group('Visual States', () {
-      testWidgets('applies selected styling when selected', (WidgetTester tester) async {
+      testWidgets('applies selected styling when selected',
+          (WidgetTester tester) async {
         await tester.pumpWidget(createDocumentCard(
           isSelected: true,
           isSelectable: true,
@@ -210,14 +227,16 @@ void main() {
         // Selected cards typically have different elevation or color
       });
 
-      testWidgets('applies hover effect on desktop platforms', (WidgetTester tester) async {
+      testWidgets('applies hover effect on desktop platforms',
+          (WidgetTester tester) async {
         await tester.pumpWidget(createDocumentCard());
 
         // Should have InkWell or similar for touch feedback
         expect(find.byType(InkWell), findsOneWidget);
       });
 
-      testWidgets('has proper card elevation and styling', (WidgetTester tester) async {
+      testWidgets('has proper card elevation and styling',
+          (WidgetTester tester) async {
         await tester.pumpWidget(createDocumentCard());
 
         final card = tester.widget<Card>(find.byType(Card));
@@ -227,7 +246,8 @@ void main() {
     });
 
     group('Layout and Responsiveness', () {
-      testWidgets('maintains proper spacing between elements', (WidgetTester tester) async {
+      testWidgets('maintains proper spacing between elements',
+          (WidgetTester tester) async {
         await tester.pumpWidget(createDocumentCard());
 
         // Should have proper padding and spacing
@@ -235,7 +255,8 @@ void main() {
         expect(find.byType(SizedBox), findsAtLeastNWidgets(1));
       });
 
-      testWidgets('handles very long titles gracefully', (WidgetTester tester) async {
+      testWidgets('handles very long titles gracefully',
+          (WidgetTester tester) async {
         final longTitleDocument = Document(
           id: 1,
           title: 'This is a very long title that might overflow ' * 5,
@@ -246,14 +267,17 @@ void main() {
           updatedAt: DateTime(2023, 1, 1),
         );
 
-        await tester.pumpWidget(createDocumentCard(document: longTitleDocument));
+        await tester
+            .pumpWidget(createDocumentCard(document: longTitleDocument));
 
         // Should not overflow or cause rendering issues
         expect(tester.takeException(), isNull);
-        expect(find.textContaining('This is a very long title'), findsOneWidget);
+        expect(
+            find.textContaining('This is a very long title'), findsOneWidget);
       });
 
-      testWidgets('adapts to different screen sizes', (WidgetTester tester) async {
+      testWidgets('adapts to different screen sizes',
+          (WidgetTester tester) async {
         // Test with different screen sizes
         await tester.binding.setSurfaceSize(const Size(800, 600));
         await tester.pumpWidget(createDocumentCard());
@@ -266,7 +290,8 @@ void main() {
     });
 
     group('Accessibility', () {
-      testWidgets('provides proper semantics for screen readers', (WidgetTester tester) async {
+      testWidgets('provides proper semantics for screen readers',
+          (WidgetTester tester) async {
         await tester.pumpWidget(createDocumentCard());
 
         // Should have semantic labels for accessibility
@@ -283,7 +308,8 @@ void main() {
     });
 
     group('Edge Cases', () {
-      testWidgets('handles navigation gracefully in normal mode', (WidgetTester tester) async {
+      testWidgets('handles navigation gracefully in normal mode',
+          (WidgetTester tester) async {
         await tester.pumpWidget(createDocumentCard());
 
         // Should not crash when tapped in normal mode
@@ -291,7 +317,8 @@ void main() {
         expect(tester.takeException(), isNull);
       });
 
-      testWidgets('handles null onSelectionToggle callback gracefully', (WidgetTester tester) async {
+      testWidgets('handles null onSelectionToggle callback gracefully',
+          (WidgetTester tester) async {
         await tester.pumpWidget(createDocumentCard(
           isSelectable: true,
           onSelectionToggle: null,
@@ -302,7 +329,8 @@ void main() {
         expect(tester.takeException(), isNull);
       });
 
-      testWidgets('handles document with very recent dates', (WidgetTester tester) async {
+      testWidgets('handles document with very recent dates',
+          (WidgetTester tester) async {
         final recentDocument = Document(
           id: 1,
           title: 'Recent Doc',

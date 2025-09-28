@@ -25,7 +25,8 @@ void main() {
           .thenAnswer((_) async => const Right(unit));
 
       // act
-      final result = await deleteDocument(DeleteDocumentParams(documentId: testId));
+      final result =
+          await deleteDocument(DeleteDocumentParams(documentId: testId));
 
       // assert
       expect(result, const Right(unit));
@@ -33,14 +34,16 @@ void main() {
       verifyNoMoreInteractions(mockSearchRepository);
     });
 
-    test('should return failure when repository call is unsuccessful', () async {
+    test('should return failure when repository call is unsuccessful',
+        () async {
       // arrange
       const failure = DatabaseFailure('Delete failed');
       when(() => mockSearchRepository.deleteDocument(any()))
           .thenAnswer((_) async => const Left(failure));
 
       // act
-      final result = await deleteDocument(DeleteDocumentParams(documentId: testId));
+      final result =
+          await deleteDocument(DeleteDocumentParams(documentId: testId));
 
       // assert
       expect(result, const Left(failure));
