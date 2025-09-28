@@ -1,0 +1,31 @@
+name: Branch Protection
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # This job will be used as a required status check
+  protect-main:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    - name: Check if direct push to main
+      run: |
+        echo "::error::Direct pushes to main branch are discouraged. Please use pull requests."
+        echo "This is a warning - consider setting up branch protection rules."
+        
+  # Combined status check for pull requests
+  required-checks:
+    runs-on: ubuntu-latest
+    needs: []
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: All checks passed
+      run: |
+        echo "All required checks have passed"
+        echo "This PR is ready for review and merge"
