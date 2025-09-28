@@ -16,7 +16,7 @@ void main() {
         id: 1,
         title: 'Test Document',
         content: 'Test content',
-        tags: ['test'],
+        tags: const ['test'],
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );
@@ -48,7 +48,7 @@ void main() {
         id: 1,
         title: 'Updated Document',
         content: 'Updated content',
-        tags: ['updated'],
+        tags: const ['updated'],
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );
@@ -94,7 +94,7 @@ void main() {
         id: 1,
         title: 'Test Document',
         content: 'Test content',
-        tags: ['test'],
+        tags: const ['test'],
         createdAt: DateTime(2023, 1, 1),
         updatedAt: DateTime(2023, 1, 1),
       );

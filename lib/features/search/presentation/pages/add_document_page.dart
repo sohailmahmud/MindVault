@@ -54,8 +54,8 @@ class _AddDocumentViewState extends State<AddDocumentView> {
         id: 0, // Will be assigned by ObjectBox
         title: _titleController.text.trim(),
         content: _contentController.text.trim(),
-        category: _categoryController.text.trim().isEmpty 
-            ? null 
+        category: _categoryController.text.trim().isEmpty
+            ? null
             : _categoryController.text.trim(),
         tags: tags,
         createdAt: DateTime.now(),
@@ -160,13 +160,15 @@ class _AddDocumentViewState extends State<AddDocumentView> {
                             labelText: 'Tags (Optional)',
                             hintText: 'Enter tags separated by commas',
                             border: OutlineInputBorder(),
-                            helperText: 'Separate tags with commas (e.g., important, work, project)',
+                            helperText:
+                                'Separate tags with commas (e.g., important, work, project)',
                           ),
                           maxLength: 200,
                         ),
                         const SizedBox(height: 32),
                         ElevatedButton(
-                          onPressed: state is SearchLoading ? null : _addDocument,
+                          onPressed:
+                              state is SearchLoading ? null : _addDocument,
                           style: ElevatedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(vertical: 16),
                           ),
@@ -174,7 +176,8 @@ class _AddDocumentViewState extends State<AddDocumentView> {
                               ? const SizedBox(
                                   height: 20,
                                   width: 20,
-                                  child: CircularProgressIndicator(strokeWidth: 2),
+                                  child:
+                                      CircularProgressIndicator(strokeWidth: 2),
                                 )
                               : const Text('Add Document'),
                         ),
@@ -184,7 +187,7 @@ class _AddDocumentViewState extends State<AddDocumentView> {
                 ),
                 if (state is SearchLoading)
                   Container(
-                    color: Colors.black.withOpacity(0.3),
+                    color: Colors.black.withAlpha(76),
                     child: const Center(
                       child: CircularProgressIndicator(),
                     ),

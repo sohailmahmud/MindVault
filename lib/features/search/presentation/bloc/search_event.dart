@@ -90,7 +90,8 @@ class SearchWithFiltersEvent extends SearchEvent {
   });
 
   @override
-  List<Object?> get props => [query, category, tags, startDate, endDate, sortBy, ascending];
+  List<Object?> get props =>
+      [query, category, tags, startDate, endDate, sortBy, ascending];
 }
 
 class GetCategoriesEvent extends SearchEvent {

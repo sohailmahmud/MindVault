@@ -27,17 +27,21 @@ class DocumentCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       elevation: isSelected ? 4 : 1,
-      color: isSelected 
-          ? Theme.of(context).colorScheme.primaryContainer.withOpacity(0.3)
+      color: isSelected
+          ? Color.alphaBlend(
+              Theme.of(context).colorScheme.primary.withAlpha(76),
+              Theme.of(context).colorScheme.primaryContainer,
+            )
           : null,
       child: InkWell(
-        onTap: isSelectable 
+        onTap: isSelectable
             ? onSelectionToggle
             : () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DocumentDetailsPage(document: document),
+                    builder: (context) =>
+                        DocumentDetailsPage(document: document),
                   ),
                 );
               },
@@ -79,7 +83,9 @@ class DocumentCard extends StatelessWidget {
                       child: Text(
                         '${(document.relevanceScore! * 100).toInt()}%',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Theme.of(context).colorScheme.onPrimaryContainer,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer,
                             ),
                       ),
                     ),
@@ -92,7 +98,8 @@ class DocumentCard extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => EditDocumentPage(document: document),
+                                builder: (context) =>
+                                    EditDocumentPage(document: document),
                               ),
                             );
                             break;
@@ -118,7 +125,8 @@ class DocumentCard extends StatelessWidget {
                             children: [
                               Icon(Icons.delete, color: Colors.red),
                               SizedBox(width: 8),
-                              Text('Delete', style: TextStyle(color: Colors.red)),
+                              Text('Delete',
+                                  style: TextStyle(color: Colors.red)),
                             ],
                           ),
                         ),
@@ -150,7 +158,9 @@ class DocumentCard extends StatelessWidget {
                       child: Text(
                         document.category!,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Theme.of(context).colorScheme.onSecondaryContainer,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSecondaryContainer,
                             ),
                       ),
                     ),
@@ -159,13 +169,17 @@ class DocumentCard extends StatelessWidget {
                   Expanded(
                     child: Wrap(
                       spacing: 4,
-                      children: document.tags.take(3).map((tag) => Chip(
-                        label: Text(
-                          tag,
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      )).toList(),
+                      children: document.tags
+                          .take(3)
+                          .map((tag) => Chip(
+                                label: Text(
+                                  tag,
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
+                                materialTapTargetSize:
+                                    MaterialTapTargetSize.shrinkWrap,
+                              ))
+                          .toList(),
                     ),
                   ),
                   Text(
@@ -225,7 +239,8 @@ class DocumentDetailsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (document.category != null || document.relevanceScore != null) ...[
+            if (document.category != null ||
+                document.relevanceScore != null) ...[
               Row(
                 children: [
                   if (document.category != null) ...[
@@ -241,7 +256,9 @@ class DocumentDetailsPage extends StatelessWidget {
                       child: Text(
                         document.category!,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Theme.of(context).colorScheme.onSecondaryContainer,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSecondaryContainer,
                             ),
                       ),
                     ),
@@ -260,7 +277,9 @@ class DocumentDetailsPage extends StatelessWidget {
                       child: Text(
                         'Relevance: ${(document.relevanceScore! * 100).toInt()}%',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Theme.of(context).colorScheme.onPrimaryContainer,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer,
                             ),
                       ),
                     ),
@@ -291,9 +310,11 @@ class DocumentDetailsPage extends StatelessWidget {
               Wrap(
                 spacing: 8,
                 runSpacing: 4,
-                children: document.tags.map((tag) => Chip(
-                  label: Text(tag),
-                )).toList(),
+                children: document.tags
+                    .map((tag) => Chip(
+                          label: Text(tag),
+                        ))
+                    .toList(),
               ),
               const SizedBox(height: 24),
             ],
@@ -305,7 +326,8 @@ class DocumentDetailsPage extends StatelessWidget {
                     Text(
                       'Created',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: Theme.of(context).colorScheme.onSurfaceVariant,
+                            color:
+                                Theme.of(context).colorScheme.onSurfaceVariant,
                           ),
                     ),
                     Text(
@@ -321,7 +343,8 @@ class DocumentDetailsPage extends StatelessWidget {
                     Text(
                       'Updated',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: Theme.of(context).colorScheme.onSurfaceVariant,
+                            color:
+                                Theme.of(context).colorScheme.onSurfaceVariant,
                           ),
                     ),
                     Text(

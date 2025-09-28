@@ -4,13 +4,15 @@ import '../../../../core/error/failures.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../repositories/search_repository.dart';
 
-class DeleteMultipleDocuments implements UseCase<Unit, DeleteMultipleDocumentsParams> {
+class DeleteMultipleDocuments
+    implements UseCase<Unit, DeleteMultipleDocumentsParams> {
   final SearchRepository repository;
 
   DeleteMultipleDocuments(this.repository);
 
   @override
-  Future<Either<Failure, Unit>> call(DeleteMultipleDocumentsParams params) async {
+  Future<Either<Failure, Unit>> call(
+      DeleteMultipleDocumentsParams params) async {
     return await repository.deleteMultipleDocuments(params.documentIds);
   }
 }

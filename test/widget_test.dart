@@ -18,7 +18,7 @@ void main() {
 
     testWidgets('Button interaction test', (WidgetTester tester) async {
       bool buttonPressed = false;
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -38,7 +38,7 @@ void main() {
 
     testWidgets('Form validation test', (WidgetTester tester) async {
       final formKey = GlobalKey<FormState>();
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -69,13 +69,14 @@ void main() {
   });
 
   group('DocumentCard Widget Tests', () {
-    testWidgets('DocumentCard displays document information', (WidgetTester tester) async {
+    testWidgets('DocumentCard displays document information',
+        (WidgetTester tester) async {
       final document = Document(
         id: 1,
         title: 'Test Document',
         content: 'This is test content',
         category: 'Test Category',
-        tags: ['test', 'flutter'],
+        tags: const ['test', 'flutter'],
         createdAt: DateTime(2023, 1, 1),
         updatedAt: DateTime(2023, 1, 1),
       );
@@ -95,13 +96,14 @@ void main() {
       expect(find.text('Test Category'), findsOneWidget);
     });
 
-    testWidgets('DocumentCard shows selection state', (WidgetTester tester) async {
+    testWidgets('DocumentCard shows selection state',
+        (WidgetTester tester) async {
       final document = Document(
         id: 1,
         title: 'Selected Document',
         content: 'Content',
         category: 'Category',
-        tags: [],
+        tags: const [],
         createdAt: DateTime(2023, 1, 1),
         updatedAt: DateTime(2023, 1, 1),
       );
@@ -120,13 +122,14 @@ void main() {
       expect(find.text('Selected Document'), findsOneWidget);
     });
 
-    testWidgets('DocumentCard displays tags correctly', (WidgetTester tester) async {
+    testWidgets('DocumentCard displays tags correctly',
+        (WidgetTester tester) async {
       final document = Document(
         id: 1,
         title: 'Tagged Document',
         content: 'Content',
         category: 'Category',
-        tags: ['flutter', 'dart', 'mobile'],
+        tags: const ['flutter', 'dart', 'mobile'],
         createdAt: DateTime(2023, 1, 1),
         updatedAt: DateTime(2023, 1, 1),
       );
@@ -147,15 +150,16 @@ void main() {
       expect(find.text('mobile'), findsOneWidget);
     });
 
-    testWidgets('DocumentCard handles selection mode', (WidgetTester tester) async {
+    testWidgets('DocumentCard handles selection mode',
+        (WidgetTester tester) async {
       bool selectionToggled = false;
-      
+
       final document = Document(
         id: 1,
         title: 'Selectable Document',
         content: 'Content',
         category: 'Category',
-        tags: [],
+        tags: const [],
         createdAt: DateTime(2023, 1, 1),
         updatedAt: DateTime(2023, 1, 1),
       );
@@ -177,17 +181,19 @@ void main() {
       // Test selection toggle on tap
       await tester.tap(find.byType(InkWell));
       await tester.pump();
-      
+
       expect(selectionToggled, isTrue);
     });
 
-    testWidgets('DocumentCard displays content preview', (WidgetTester tester) async {
+    testWidgets('DocumentCard displays content preview',
+        (WidgetTester tester) async {
       final document = Document(
         id: 1,
         title: 'Document with Content',
-        content: 'This is a longer content that should be displayed in the card preview. It contains multiple sentences.',
+        content:
+            'This is a longer content that should be displayed in the card preview. It contains multiple sentences.',
         category: 'Articles',
-        tags: ['content', 'preview'],
+        tags: const ['content', 'preview'],
         createdAt: DateTime(2023, 1, 1),
         updatedAt: DateTime(2023, 1, 1),
       );

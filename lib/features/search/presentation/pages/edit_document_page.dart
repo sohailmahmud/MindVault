@@ -48,8 +48,10 @@ class _EditDocumentViewState extends State<EditDocumentView> {
     super.initState();
     _titleController = TextEditingController(text: widget.document.title);
     _contentController = TextEditingController(text: widget.document.content);
-    _categoryController = TextEditingController(text: widget.document.category ?? '');
-    _tagsController = TextEditingController(text: widget.document.tags.join(', '));
+    _categoryController =
+        TextEditingController(text: widget.document.category ?? '');
+    _tagsController =
+        TextEditingController(text: widget.document.tags.join(', '));
   }
 
   @override
@@ -72,8 +74,8 @@ class _EditDocumentViewState extends State<EditDocumentView> {
       final updatedDocument = widget.document.copyWith(
         title: _titleController.text.trim(),
         content: _contentController.text.trim(),
-        category: _categoryController.text.trim().isEmpty 
-            ? null 
+        category: _categoryController.text.trim().isEmpty
+            ? null
             : _categoryController.text.trim(),
         tags: tags,
         updatedAt: DateTime.now(),
@@ -88,7 +90,8 @@ class _EditDocumentViewState extends State<EditDocumentView> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Delete Document'),
-        content: Text('Are you sure you want to delete "${widget.document.title}"? This action cannot be undone.'),
+        content: Text(
+            'Are you sure you want to delete "${widget.document.title}"? This action cannot be undone.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -97,7 +100,9 @@ class _EditDocumentViewState extends State<EditDocumentView> {
           TextButton(
             onPressed: () {
               Navigator.pop(context);
-              context.read<SearchBloc>().add(DeleteDocumentEvent(widget.document.id));
+              context
+                  .read<SearchBloc>()
+                  .add(DeleteDocumentEvent(widget.document.id));
             },
             style: TextButton.styleFrom(foregroundColor: Colors.red),
             child: const Text('Delete'),
@@ -171,13 +176,20 @@ class _EditDocumentViewState extends State<EditDocumentView> {
                               children: [
                                 Text(
                                   'Document Info',
-                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                                  ),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall
+                                      ?.copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurfaceVariant,
+                                      ),
                                 ),
                                 const SizedBox(height: 4),
-                                Text('Created: ${_formatDate(widget.document.createdAt)}'),
-                                Text('Last Updated: ${_formatDate(widget.document.updatedAt)}'),
+                                Text(
+                                    'Created: ${_formatDate(widget.document.createdAt)}'),
+                                Text(
+                                    'Last Updated: ${_formatDate(widget.document.updatedAt)}'),
                               ],
                             ),
                           ),
@@ -234,7 +246,8 @@ class _EditDocumentViewState extends State<EditDocumentView> {
                             labelText: 'Tags (Optional)',
                             hintText: 'Enter tags separated by commas',
                             border: OutlineInputBorder(),
-                            helperText: 'Separate tags with commas (e.g., important, work, project)',
+                            helperText:
+                                'Separate tags with commas (e.g., important, work, project)',
                           ),
                           maxLength: 200,
                         ),
@@ -243,9 +256,12 @@ class _EditDocumentViewState extends State<EditDocumentView> {
                           children: [
                             Expanded(
                               child: OutlinedButton(
-                                onPressed: state is SearchLoading ? null : _deleteDocument,
+                                onPressed: state is SearchLoading
+                                    ? null
+                                    : _deleteDocument,
                                 style: OutlinedButton.styleFrom(
-                                  padding: const EdgeInsets.symmetric(vertical: 16),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 16),
                                   foregroundColor: Colors.red,
                                 ),
                                 child: const Row(
@@ -261,15 +277,19 @@ class _EditDocumentViewState extends State<EditDocumentView> {
                             const SizedBox(width: 16),
                             Expanded(
                               child: ElevatedButton(
-                                onPressed: state is SearchLoading ? null : _updateDocument,
+                                onPressed: state is SearchLoading
+                                    ? null
+                                    : _updateDocument,
                                 style: ElevatedButton.styleFrom(
-                                  padding: const EdgeInsets.symmetric(vertical: 16),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 16),
                                 ),
                                 child: state is SearchLoading
                                     ? const SizedBox(
                                         height: 20,
                                         width: 20,
-                                        child: CircularProgressIndicator(strokeWidth: 2),
+                                        child: CircularProgressIndicator(
+                                            strokeWidth: 2),
                                       )
                                     : const Text('Save Changes'),
                               ),
@@ -282,7 +302,7 @@ class _EditDocumentViewState extends State<EditDocumentView> {
                 ),
                 if (state is SearchLoading)
                   Container(
-                    color: Colors.black.withOpacity(0.3),
+                    color: Colors.black.withAlpha(76),
                     child: const Center(
                       child: CircularProgressIndicator(),
                     ),

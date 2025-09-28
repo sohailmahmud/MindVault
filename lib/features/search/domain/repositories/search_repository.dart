@@ -10,9 +10,10 @@ abstract class SearchRepository {
   Future<Either<Failure, Unit>> deleteDocument(int documentId);
   Future<Either<Failure, List<Document>>> getAllDocuments();
   Future<Either<Failure, Document?>> getDocumentById(int documentId);
-  Future<Either<Failure, List<Document>>> getDocumentsByCategory(String category);
+  Future<Either<Failure, List<Document>>> getDocumentsByCategory(
+      String category);
   Future<Either<Failure, List<Document>>> getDocumentsByTags(List<String> tags);
-  
+
   // Advanced search features
   Future<Either<Failure, List<Document>>> searchWithFilters({
     String? query,
@@ -23,13 +24,14 @@ abstract class SearchRepository {
     String sortBy = 'updatedAt',
     bool ascending = false,
   });
-  
+
   Future<Either<Failure, List<String>>> getAllCategories();
   Future<Either<Failure, List<String>>> getAllTags();
   Future<Either<Failure, List<String>>> suggestCategories(String input);
   Future<Either<Failure, List<String>>> suggestTags(String input);
-  
+
   // Bulk operations
   Future<Either<Failure, Unit>> deleteMultipleDocuments(List<int> documentIds);
-  Future<Either<Failure, List<Document>>> updateMultipleDocuments(List<Document> documents);
+  Future<Either<Failure, List<Document>>> updateMultipleDocuments(
+      List<Document> documents);
 }

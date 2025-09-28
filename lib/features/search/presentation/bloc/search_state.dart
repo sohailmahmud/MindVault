@@ -31,13 +31,13 @@ class SearchLoaded extends SearchState {
 
   @override
   List<Object?> get props => [
-    documents, 
-    searchQuery, 
-    isSemanticSearch, 
-    selectedDocumentIds,
-    availableCategories,
-    availableTags,
-  ];
+        documents,
+        searchQuery,
+        isSemanticSearch,
+        selectedDocumentIds,
+        availableCategories,
+        availableTags,
+      ];
 
   SearchLoaded copyWith({
     List<Document>? documents,

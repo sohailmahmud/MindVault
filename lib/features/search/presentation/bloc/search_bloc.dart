@@ -45,11 +45,12 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     on<DeleteMultipleDocumentsEvent>(_onDeleteMultipleDocuments);
   }
 
-  void _onSearchDocuments(SearchDocumentsEvent event, Emitter<SearchState> emit) async {
+  void _onSearchDocuments(
+      SearchDocumentsEvent event, Emitter<SearchState> emit) async {
     emit(SearchLoading());
-    
+
     final result = await searchDocuments(SearchParams(query: event.query));
-    
+
     result.fold(
       (failure) => emit(SearchError(_mapFailureToMessage(failure))),
       (documents) => emit(SearchLoaded(
@@ -60,11 +61,13 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     );
   }
 
-  void _onSemanticSearch(SemanticSearchEvent event, Emitter<SearchState> emit) async {
+  void _onSemanticSearch(
+      SemanticSearchEvent event, Emitter<SearchState> emit) async {
     emit(SearchLoading());
-    
-    final result = await semanticSearch(SemanticSearchParams(query: event.query));
-    
+
+    final result =
+        await semanticSearch(SemanticSearchParams(query: event.query));
+
     result.fold(
       (failure) => emit(SearchError(_mapFailureToMessage(failure))),
       (documents) => emit(SearchLoaded(
@@ -75,11 +78,12 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     );
   }
 
-  void _onLoadAllDocuments(LoadAllDocumentsEvent event, Emitter<SearchState> emit) async {
+  void _onLoadAllDocuments(
+      LoadAllDocumentsEvent event, Emitter<SearchState> emit) async {
     emit(SearchLoading());
-    
+
     final result = await getAllDocuments(NoParams());
-    
+
     result.fold(
       (failure) => emit(SearchError(_mapFailureToMessage(failure))),
       (documents) => emit(SearchLoaded(
@@ -92,9 +96,10 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
   void _onAddDocument(AddDocumentEvent event, Emitter<SearchState> emit) async {
     emit(SearchLoading());
-    
-    final result = await addDocument(AddDocumentParams(document: event.document));
-    
+
+    final result =
+        await addDocument(AddDocumentParams(document: event.document));
+
     result.fold(
       (failure) => emit(SearchError(_mapFailureToMessage(failure))),
       (document) {
@@ -109,11 +114,13 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     add(const LoadAllDocumentsEvent());
   }
 
-  void _onUpdateDocument(UpdateDocumentEvent event, Emitter<SearchState> emit) async {
+  void _onUpdateDocument(
+      UpdateDocumentEvent event, Emitter<SearchState> emit) async {
     emit(SearchLoading());
-    
-    final result = await updateDocument(UpdateDocumentParams(document: event.document));
-    
+
+    final result =
+        await updateDocument(UpdateDocumentParams(document: event.document));
+
     result.fold(
       (failure) => emit(SearchError(_mapFailureToMessage(failure))),
       (document) {
@@ -124,11 +131,13 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     );
   }
 
-  void _onDeleteDocument(DeleteDocumentEvent event, Emitter<SearchState> emit) async {
+  void _onDeleteDocument(
+      DeleteDocumentEvent event, Emitter<SearchState> emit) async {
     emit(SearchLoading());
-    
-    final result = await deleteDocument(DeleteDocumentParams(documentId: event.documentId));
-    
+
+    final result = await deleteDocument(
+        DeleteDocumentParams(documentId: event.documentId));
+
     result.fold(
       (failure) => emit(SearchError(_mapFailureToMessage(failure))),
       (_) {
@@ -139,17 +148,18 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     );
   }
 
-  void _onToggleDocumentSelection(ToggleDocumentSelectionEvent event, Emitter<SearchState> emit) {
+  void _onToggleDocumentSelection(
+      ToggleDocumentSelectionEvent event, Emitter<SearchState> emit) {
     if (state is SearchLoaded) {
       final currentState = state as SearchLoaded;
       final selectedIds = Set<int>.from(currentState.selectedDocumentIds);
-      
+
       if (selectedIds.contains(event.documentId)) {
         selectedIds.remove(event.documentId);
       } else {
         selectedIds.add(event.documentId);
       }
-      
+
       emit(currentState.copyWith(selectedDocumentIds: selectedIds));
     }
   }
@@ -161,11 +171,13 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     }
   }
 
-  void _onDeleteMultipleDocuments(DeleteMultipleDocumentsEvent event, Emitter<SearchState> emit) async {
+  void _onDeleteMultipleDocuments(
+      DeleteMultipleDocumentsEvent event, Emitter<SearchState> emit) async {
     emit(SearchLoading());
-    
-    final result = await deleteMultipleDocuments(DeleteMultipleDocumentsParams(documentIds: event.documentIds));
-    
+
+    final result = await deleteMultipleDocuments(
+        DeleteMultipleDocumentsParams(documentIds: event.documentIds));
+
     result.fold(
       (failure) => emit(SearchError(_mapFailureToMessage(failure))),
       (_) {

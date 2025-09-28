@@ -4,10 +4,10 @@ import 'features/search/presentation/pages/search_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // Initialize dependencies
   await initializeDependencies();
-  
+
   runApp(const MindVaultApp());
 }
 

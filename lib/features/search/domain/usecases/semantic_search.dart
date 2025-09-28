@@ -11,7 +11,8 @@ class SemanticSearch implements UseCase<List<Document>, SemanticSearchParams> {
   SemanticSearch(this.repository);
 
   @override
-  Future<Either<Failure, List<Document>>> call(SemanticSearchParams params) async {
+  Future<Either<Failure, List<Document>>> call(
+      SemanticSearchParams params) async {
     return await repository.semanticSearch(params.query);
   }
 }

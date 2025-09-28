@@ -11,7 +11,7 @@ void main() {
         title: 'Test Document',
         content: 'This is test content',
         category: 'Test Category',
-        tags: ['test', 'flutter'],
+        tags: const ['test', 'flutter'],
         createdAt: DateTime(2023, 1, 1),
         updatedAt: DateTime(2023, 1, 2),
         relevanceScore: 0.85,
@@ -34,7 +34,7 @@ void main() {
         id: 2,
         title: 'Minimal Document',
         content: 'Minimal content',
-        tags: [],
+        tags: const [],
         createdAt: DateTime(2023, 1, 1),
         updatedAt: DateTime(2023, 1, 1),
       );
@@ -50,7 +50,7 @@ void main() {
         title: 'Test Document',
         content: 'This is test content',
         category: 'Test Category',
-        tags: ['test', 'flutter'],
+        tags: const ['test', 'flutter'],
         createdAt: DateTime(2023, 1, 1),
         updatedAt: DateTime(2023, 1, 2),
         relevanceScore: 0.85,
@@ -61,7 +61,7 @@ void main() {
         title: 'Test Document',
         content: 'This is test content',
         category: 'Test Category',
-        tags: ['test', 'flutter'],
+        tags: const ['test', 'flutter'],
         createdAt: DateTime(2023, 1, 1),
         updatedAt: DateTime(2023, 1, 2),
         relevanceScore: 0.85,
@@ -71,7 +71,7 @@ void main() {
         id: 2,
         title: 'Different Document',
         content: 'Different content',
-        tags: [],
+        tags: const [],
         createdAt: DateTime(2023, 1, 1),
         updatedAt: DateTime(2023, 1, 1),
       );
@@ -94,7 +94,8 @@ void main() {
       expect(updatedDocument.tags, equals(testDocument.tags));
       expect(updatedDocument.createdAt, equals(testDocument.createdAt));
       expect(updatedDocument.updatedAt, equals(DateTime(2023, 1, 3)));
-      expect(updatedDocument.relevanceScore, equals(testDocument.relevanceScore));
+      expect(
+          updatedDocument.relevanceScore, equals(testDocument.relevanceScore));
     });
 
     test('should maintain original values when copyWith called with nulls', () {
@@ -108,7 +109,7 @@ void main() {
         id: 3,
         title: 'No Tags Document',
         content: 'Content without tags',
-        tags: [],
+        tags: const [],
         createdAt: DateTime(2023, 1, 1),
         updatedAt: DateTime(2023, 1, 1),
       );
@@ -122,7 +123,7 @@ void main() {
         id: 4,
         title: 'Multi Tag Document',
         content: 'Content with many tags',
-        tags: ['flutter', 'dart', 'mobile', 'development', 'test'],
+        tags: const ['flutter', 'dart', 'mobile', 'development', 'test'],
         createdAt: DateTime(2023, 1, 1),
         updatedAt: DateTime(2023, 1, 1),
       );
@@ -140,7 +141,7 @@ void main() {
         id: 5,
         title: 'Zero Score',
         content: 'Content',
-        tags: [],
+        tags: const [],
         createdAt: DateTime(2023, 1, 1),
         updatedAt: DateTime(2023, 1, 1),
         relevanceScore: 0.0,
@@ -150,7 +151,7 @@ void main() {
         id: 6,
         title: 'Perfect Score',
         content: 'Content',
-        tags: [],
+        tags: const [],
         createdAt: DateTime(2023, 1, 1),
         updatedAt: DateTime(2023, 1, 1),
         relevanceScore: 1.0,
@@ -162,7 +163,7 @@ void main() {
 
     test('should convert to string representation correctly', () {
       final stringRepresentation = testDocument.toString();
-      
+
       expect(stringRepresentation, contains('Document'));
       expect(stringRepresentation, contains('1'));
       expect(stringRepresentation, contains('Test Document'));

@@ -21,7 +21,7 @@ void main() {
       title: 'Test Document',
       content: 'Test content',
       category: 'Test Category', 
-      tags: ['tag1', 'tag2'],
+      tags: const ['tag1', 'tag2'],
       createdAt: testDateTime,
       updatedAt: testDateTime,
       relevanceScore: 0.8,
@@ -116,7 +116,7 @@ void main() {
           id: 1,
           title: 'Test',
           content: 'Content',
-          tags: [],
+          tags: const [],
           createdAt: testDateTime,
           updatedAt: testDateTime,
         );

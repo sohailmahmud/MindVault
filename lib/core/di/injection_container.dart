@@ -1,5 +1,4 @@
 import 'package:get_it/get_it.dart';
-import 'package:objectbox/objectbox.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 
@@ -23,7 +22,8 @@ final serviceLocator = GetIt.instance;
 Future<void> initializeDependencies() async {
   // External dependencies
   final docsDir = await getApplicationDocumentsDirectory();
-  final store = await openStore(directory: p.join(docsDir.path, 'mindvault-db'));
+  final store =
+      await openStore(directory: p.join(docsDir.path, 'mindvault-db'));
   serviceLocator.registerLazySingleton<Store>(() => store);
 
   // Data sources
@@ -50,7 +50,8 @@ Future<void> initializeDependencies() async {
   serviceLocator.registerLazySingleton(() => AddDocument(serviceLocator()));
   serviceLocator.registerLazySingleton(() => UpdateDocument(serviceLocator()));
   serviceLocator.registerLazySingleton(() => DeleteDocument(serviceLocator()));
-  serviceLocator.registerLazySingleton(() => DeleteMultipleDocuments(serviceLocator()));
+  serviceLocator
+      .registerLazySingleton(() => DeleteMultipleDocuments(serviceLocator()));
   serviceLocator.registerLazySingleton(() => GetDocumentById(serviceLocator()));
 
   // BLoC

@@ -10,13 +10,13 @@ class DocumentModel {
   String content;
   String? category;
   List<String> tags;
-  
+
   @Property(type: PropertyType.date)
   DateTime createdAt;
-  
+
   @Property(type: PropertyType.date)
   DateTime updatedAt;
-  
+
   double? relevanceScore;
 
   DocumentModel({

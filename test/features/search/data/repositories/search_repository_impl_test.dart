@@ -15,7 +15,9 @@ class MockSearchLocalDataSource implements SearchLocalDataSource {
 
   @override
   Future<DocumentModel> addDocument(DocumentModel document) async {
-    if (shouldThrowError) throw Exception(errorMessage);
+    if (shouldThrowError) {
+      throw Exception(errorMessage);
+    }
     final newDocument = document.copyWith(id: _documents.length + 1);
     _documents.add(newDocument);
     return newDocument;
@@ -23,7 +25,9 @@ class MockSearchLocalDataSource implements SearchLocalDataSource {
 
   @override
   Future<void> deleteDocument(int documentId) async {
-    if (shouldThrowError) throw Exception(errorMessage);
+    if (shouldThrowError) {
+      throw Exception(errorMessage);
+    }
     _documents.removeWhere((doc) => doc.id == documentId);
   }
 
@@ -52,10 +56,11 @@ class MockSearchLocalDataSource implements SearchLocalDataSource {
   @override
   Future<List<DocumentModel>> searchDocuments(String query) async {
     if (shouldThrowError) throw Exception(errorMessage);
-    return _documents.where((doc) => 
-      doc.title.toLowerCase().contains(query.toLowerCase()) ||
-      doc.content.toLowerCase().contains(query.toLowerCase())
-    ).toList();
+    return _documents
+        .where((doc) =>
+            doc.title.toLowerCase().contains(query.toLowerCase()) ||
+            doc.content.toLowerCase().contains(query.toLowerCase()))
+        .toList();
   }
 
   @override
@@ -78,9 +83,9 @@ class MockSearchLocalDataSource implements SearchLocalDataSource {
   @override
   Future<List<DocumentModel>> getDocumentsByTags(List<String> tags) async {
     if (shouldThrowError) throw Exception(errorMessage);
-    return _documents.where((doc) => 
-      tags.any((tag) => doc.tags.contains(tag))
-    ).toList();
+    return _documents
+        .where((doc) => tags.any((tag) => doc.tags.contains(tag)))
+        .toList();
   }
 
   @override
@@ -97,8 +102,9 @@ class MockSearchLocalDataSource implements SearchLocalDataSource {
     var results = _documents.where((doc) {
       bool matches = true;
       if (query != null && query.isNotEmpty) {
-        matches = matches && (doc.title.toLowerCase().contains(query.toLowerCase()) ||
-                 doc.content.toLowerCase().contains(query.toLowerCase()));
+        matches = matches &&
+            (doc.title.toLowerCase().contains(query.toLowerCase()) ||
+                doc.content.toLowerCase().contains(query.toLowerCase()));
       }
       if (category != null) {
         matches = matches && doc.category == category;
@@ -108,16 +114,21 @@ class MockSearchLocalDataSource implements SearchLocalDataSource {
       }
       return matches;
     }).toList();
-    
+
     // Simple sorting by title for test
-    results.sort((a, b) => ascending ? a.title.compareTo(b.title) : b.title.compareTo(a.title));
+    results.sort((a, b) =>
+        ascending ? a.title.compareTo(b.title) : b.title.compareTo(a.title));
     return results;
   }
 
   @override
   Future<List<String>> getAllCategories() async {
     if (shouldThrowError) throw Exception(errorMessage);
-    return _documents.map((doc) => doc.category ?? '').where((cat) => cat.isNotEmpty).toSet().toList();
+    return _documents
+        .map((doc) => doc.category ?? '')
+        .where((cat) => cat.isNotEmpty)
+        .toSet()
+        .toList();
   }
 
   @override
@@ -130,18 +141,23 @@ class MockSearchLocalDataSource implements SearchLocalDataSource {
   Future<List<String>> suggestCategories(String input) async {
     if (shouldThrowError) throw Exception(errorMessage);
     final allCategories = await getAllCategories();
-    return allCategories.where((cat) => cat.toLowerCase().contains(input.toLowerCase())).toList();
+    return allCategories
+        .where((cat) => cat.toLowerCase().contains(input.toLowerCase()))
+        .toList();
   }
 
   @override
   Future<List<String>> suggestTags(String input) async {
     if (shouldThrowError) throw Exception(errorMessage);
     final allTags = await getAllTags();
-    return allTags.where((tag) => tag.toLowerCase().contains(input.toLowerCase())).toList();
+    return allTags
+        .where((tag) => tag.toLowerCase().contains(input.toLowerCase()))
+        .toList();
   }
 
   @override
-  Future<List<DocumentModel>> updateMultipleDocuments(List<DocumentModel> documents) async {
+  Future<List<DocumentModel>> updateMultipleDocuments(
+      List<DocumentModel> documents) async {
     if (shouldThrowError) throw Exception(errorMessage);
     for (final doc in documents) {
       await updateDocument(doc);
@@ -156,7 +172,8 @@ class MockAIDataSource implements AIDataSource {
   List<DocumentModel> mockResults = [];
 
   @override
-  Future<List<DocumentModel>> performSemanticSearch(String query, List<DocumentModel> documents) async {
+  Future<List<DocumentModel>> performSemanticSearch(
+      String query, List<DocumentModel> documents) async {
     if (shouldThrowError) throw Exception(errorMessage);
     return mockResults;
   }
@@ -173,7 +190,8 @@ class MockAIDataSource implements AIDataSource {
   }
 
   @override
-  Future<double> calculateSimilarity(List<double> embedding1, List<double> embedding2) async {
+  Future<double> calculateSimilarity(
+      List<double> embedding1, List<double> embedding2) async {
     if (shouldThrowError) throw Exception(errorMessage);
     return 0.8;
   }
@@ -197,7 +215,8 @@ class MockAIDataSource implements AIDataSource {
   }
 
   @override
-  Future<List<String>> findSimilarDocuments(DocumentModel document, List<DocumentModel> allDocuments) async {
+  Future<List<String>> findSimilarDocuments(
+      DocumentModel document, List<DocumentModel> allDocuments) async {
     if (shouldThrowError) throw Exception(errorMessage);
     return ['Similar Document'];
   }
@@ -232,7 +251,7 @@ void main() {
       id: 1,
       title: 'Test Document',
       content: 'Test content',
-      tags: ['test'],
+      tags: const ['test'],
       createdAt: DateTime(2023, 1, 1),
       updatedAt: DateTime(2023, 1, 1),
     );
@@ -253,7 +272,9 @@ void main() {
         expect(documents.first.title, 'Test Document');
       });
 
-      test('should return DatabaseFailure when local data source throws exception', () async {
+      test(
+          'should return DatabaseFailure when local data source throws exception',
+          () async {
         // Arrange
         mockLocalDataSource.shouldThrowError = true;
 
@@ -268,7 +289,8 @@ void main() {
     });
 
     group('semanticSearch', () {
-      test('should return documents when semantic search is successful', () async {
+      test('should return documents when semantic search is successful',
+          () async {
         // Arrange
         mockAIDataSource.mockResults = [testDocumentModel];
 
@@ -282,7 +304,8 @@ void main() {
         expect(documents!.length, 1);
       });
 
-      test('should return AIModelFailure when AI data source throws exception', () async {
+      test('should return AIModelFailure when AI data source throws exception',
+          () async {
         // Arrange
         mockAIDataSource.shouldThrowError = true;
 
@@ -309,7 +332,9 @@ void main() {
         expect(document.id, 1);
       });
 
-      test('should return DatabaseFailure when local data source throws exception', () async {
+      test(
+          'should return DatabaseFailure when local data source throws exception',
+          () async {
         // Arrange
         mockLocalDataSource.shouldThrowError = true;
 
@@ -324,7 +349,8 @@ void main() {
     });
 
     group('updateDocument', () {
-      test('should return updated document when update is successful', () async {
+      test('should return updated document when update is successful',
+          () async {
         // Arrange
         mockLocalDataSource._documents.add(testDocumentModel);
 
@@ -337,7 +363,9 @@ void main() {
         expect(document, isNotNull);
       });
 
-      test('should return DatabaseFailure when local data source throws exception', () async {
+      test(
+          'should return DatabaseFailure when local data source throws exception',
+          () async {
         // Arrange
         mockLocalDataSource.shouldThrowError = true;
 
@@ -362,7 +390,9 @@ void main() {
         expect(unit, isNotNull);
       });
 
-      test('should return DatabaseFailure when local data source throws exception', () async {
+      test(
+          'should return DatabaseFailure when local data source throws exception',
+          () async {
         // Arrange
         mockLocalDataSource.shouldThrowError = true;
 
@@ -385,7 +415,9 @@ void main() {
         expect(result, isA<Right<Failure, Unit>>());
       });
 
-      test('should return DatabaseFailure when local data source throws exception', () async {
+      test(
+          'should return DatabaseFailure when local data source throws exception',
+          () async {
         // Arrange
         mockLocalDataSource.shouldThrowError = true;
 
@@ -414,7 +446,9 @@ void main() {
         expect(documents!.length, 1);
       });
 
-      test('should return DatabaseFailure when local data source throws exception', () async {
+      test(
+          'should return DatabaseFailure when local data source throws exception',
+          () async {
         // Arrange
         mockLocalDataSource.shouldThrowError = true;
 
@@ -453,7 +487,9 @@ void main() {
         expect(document, isNull);
       });
 
-      test('should return DatabaseFailure when local data source throws exception', () async {
+      test(
+          'should return DatabaseFailure when local data source throws exception',
+          () async {
         // Arrange
         mockLocalDataSource.shouldThrowError = true;
 
@@ -595,7 +631,9 @@ void main() {
         expect(documents!.length, 1);
       });
 
-      test('should return DatabaseFailure when local data source throws exception', () async {
+      test(
+          'should return DatabaseFailure when local data source throws exception',
+          () async {
         // Arrange
         mockLocalDataSource.shouldThrowError = true;
 

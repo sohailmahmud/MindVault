@@ -19,7 +19,8 @@ class SearchRepositoryImpl implements SearchRepository {
   Future<Either<Failure, List<Document>>> searchDocuments(String query) async {
     try {
       final documentModels = await localDataSource.searchDocuments(query);
-      final documents = documentModels.map((model) => model.toEntity()).toList();
+      final documents =
+          documentModels.map((model) => model.toEntity()).toList();
       return Right(documents);
     } catch (e) {
       return Left(DatabaseFailure(e.toString()));
@@ -30,8 +31,10 @@ class SearchRepositoryImpl implements SearchRepository {
   Future<Either<Failure, List<Document>>> semanticSearch(String query) async {
     try {
       final allDocumentModels = await localDataSource.getAllDocuments();
-      final semanticResults = await aiDataSource.performSemanticSearch(query, allDocumentModels);
-      final documents = semanticResults.map((model) => model.toEntity()).toList();
+      final semanticResults =
+          await aiDataSource.performSemanticSearch(query, allDocumentModels);
+      final documents =
+          semanticResults.map((model) => model.toEntity()).toList();
       return Right(documents);
     } catch (e) {
       return Left(AIModelFailure(e.toString()));
@@ -74,7 +77,8 @@ class SearchRepositoryImpl implements SearchRepository {
   Future<Either<Failure, List<Document>>> getAllDocuments() async {
     try {
       final documentModels = await localDataSource.getAllDocuments();
-      final documents = documentModels.map((model) => model.toEntity()).toList();
+      final documents =
+          documentModels.map((model) => model.toEntity()).toList();
       return Right(documents);
     } catch (e) {
       return Left(DatabaseFailure(e.toString()));
@@ -93,10 +97,13 @@ class SearchRepositoryImpl implements SearchRepository {
   }
 
   @override
-  Future<Either<Failure, List<Document>>> getDocumentsByCategory(String category) async {
+  Future<Either<Failure, List<Document>>> getDocumentsByCategory(
+      String category) async {
     try {
-      final documentModels = await localDataSource.getDocumentsByCategory(category);
-      final documents = documentModels.map((model) => model.toEntity()).toList();
+      final documentModels =
+          await localDataSource.getDocumentsByCategory(category);
+      final documents =
+          documentModels.map((model) => model.toEntity()).toList();
       return Right(documents);
     } catch (e) {
       return Left(DatabaseFailure(e.toString()));
@@ -104,10 +111,12 @@ class SearchRepositoryImpl implements SearchRepository {
   }
 
   @override
-  Future<Either<Failure, List<Document>>> getDocumentsByTags(List<String> tags) async {
+  Future<Either<Failure, List<Document>>> getDocumentsByTags(
+      List<String> tags) async {
     try {
       final documentModels = await localDataSource.getDocumentsByTags(tags);
-      final documents = documentModels.map((model) => model.toEntity()).toList();
+      final documents =
+          documentModels.map((model) => model.toEntity()).toList();
       return Right(documents);
     } catch (e) {
       return Left(DatabaseFailure(e.toString()));
@@ -134,7 +143,8 @@ class SearchRepositoryImpl implements SearchRepository {
         sortBy: sortBy,
         ascending: ascending,
       );
-      final documents = documentModels.map((model) => model.toEntity()).toList();
+      final documents =
+          documentModels.map((model) => model.toEntity()).toList();
       return Right(documents);
     } catch (e) {
       return Left(DatabaseFailure(e.toString()));
@@ -182,7 +192,8 @@ class SearchRepositoryImpl implements SearchRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> deleteMultipleDocuments(List<int> documentIds) async {
+  Future<Either<Failure, Unit>> deleteMultipleDocuments(
+      List<int> documentIds) async {
     try {
       await localDataSource.deleteMultipleDocuments(documentIds);
       return const Right(unit);
@@ -192,11 +203,15 @@ class SearchRepositoryImpl implements SearchRepository {
   }
 
   @override
-  Future<Either<Failure, List<Document>>> updateMultipleDocuments(List<Document> documents) async {
+  Future<Either<Failure, List<Document>>> updateMultipleDocuments(
+      List<Document> documents) async {
     try {
-      final documentModels = documents.map((doc) => DocumentModel.fromEntity(doc)).toList();
-      final updatedModels = await localDataSource.updateMultipleDocuments(documentModels);
-      final updatedDocuments = updatedModels.map((model) => model.toEntity()).toList();
+      final documentModels =
+          documents.map((doc) => DocumentModel.fromEntity(doc)).toList();
+      final updatedModels =
+          await localDataSource.updateMultipleDocuments(documentModels);
+      final updatedDocuments =
+          updatedModels.map((model) => model.toEntity()).toList();
       return Right(updatedDocuments);
     } catch (e) {
       return Left(DatabaseFailure(e.toString()));
