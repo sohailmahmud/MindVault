@@ -40,8 +40,8 @@ dependencies:
   equatable: ^2.0.5
   
   # Database
-  objectbox: ^2.2.0
-  objectbox_flutter_libs: ^2.2.0
+  objectbox: ^4.3.1
+  objectbox_flutter_libs: ^4.3.1
   
   # Dependency Injection
   get_it: ^7.6.4
@@ -62,12 +62,12 @@ dev_dependencies:
     sdk: flutter
 
   # Testing
-  mockito: ^5.4.4
-  build_runner: ^2.4.7
+  mockito: ^5.5.0
+  build_runner: ^2.7.1
   
   # Code generation
-  objectbox_generator: ^2.2.0
-  injectable_generator: ^2.4.1
+  objectbox_generator: ^4.3.1
+  injectable_generator: ^2.8.1
 
   # Linting
   flutter_lints: ^2.0.0
