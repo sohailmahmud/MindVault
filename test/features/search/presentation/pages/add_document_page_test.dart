@@ -13,13 +13,23 @@ import 'package:mindvault/features/search/presentation/pages/add_document_page.d
 class MockSearchBloc extends MockBloc<SearchEvent, SearchState>
     implements SearchBloc {}
 
+class FakeSearchEvent extends Fake implements SearchEvent {}
+
+class FakeDocument extends Fake implements Document {}
+
 void main() {
+  setUpAll(() {
+    registerFallbackValue(FakeSearchEvent());
+    registerFallbackValue(FakeDocument());
+  });
+
   group('AddDocumentPage Tests', () {
     late MockSearchBloc mockSearchBloc;
 
     setUp(() {
       mockSearchBloc = MockSearchBloc();
       when(() => mockSearchBloc.state).thenReturn(SearchInitial());
+      when(() => mockSearchBloc.stream).thenAnswer((_) => Stream.empty());
     });
 
     Widget createAddDocumentPage() {
@@ -37,7 +47,7 @@ void main() {
         await tester.pumpWidget(createAddDocumentPage());
 
         // Check AppBar
-        expect(find.text('Add Document'), findsOneWidget);
+        expect(find.widgetWithText(AppBar, 'Add Document'), findsOneWidget);
         expect(find.text('Save'), findsOneWidget);
 
         // Check form fields
@@ -50,8 +60,7 @@ void main() {
         expect(find.text('Tags (Optional)'), findsOneWidget);
 
         // Check submit button
-        expect(find.text('Add Document'), findsOneWidget);
-        expect(find.byType(ElevatedButton), findsOneWidget);
+        expect(find.widgetWithText(ElevatedButton, 'Add Document'), findsOneWidget);
       });
 
       testWidgets('displays hint texts correctly', (WidgetTester tester) async {
@@ -81,7 +90,7 @@ void main() {
         await tester.pumpWidget(createAddDocumentPage());
 
         // Try to submit empty form
-        await tester.tap(find.text('Add Document'));
+        await tester.tap(find.widgetWithText(ElevatedButton, 'Add Document'));
         await tester.pump();
 
         // Check validation messages
@@ -95,7 +104,7 @@ void main() {
         // Test empty title
         await tester.enterText(
             find.widgetWithText(TextFormField, 'Title *'), '');
-        await tester.tap(find.text('Add Document'));
+        await tester.tap(find.widgetWithText(ElevatedButton, 'Add Document'));
         await tester.pump();
 
         expect(find.text('Title is required'), findsOneWidget);
@@ -103,7 +112,7 @@ void main() {
         // Test whitespace-only title
         await tester.enterText(
             find.widgetWithText(TextFormField, 'Title *'), '   ');
-        await tester.tap(find.text('Add Document'));
+        await tester.tap(find.widgetWithText(ElevatedButton, 'Add Document'));
         await tester.pump();
 
         expect(find.text('Title is required'), findsOneWidget);
@@ -115,7 +124,7 @@ void main() {
         // Test empty content
         await tester.enterText(
             find.widgetWithText(TextFormField, 'Content *'), '');
-        await tester.tap(find.text('Add Document'));
+        await tester.tap(find.widgetWithText(ElevatedButton, 'Add Document'));
         await tester.pump();
 
         expect(find.text('Content is required'), findsOneWidget);
@@ -123,7 +132,7 @@ void main() {
         // Test whitespace-only content
         await tester.enterText(
             find.widgetWithText(TextFormField, 'Content *'), '   ');
-        await tester.tap(find.text('Add Document'));
+        await tester.tap(find.widgetWithText(ElevatedButton, 'Add Document'));
         await tester.pump();
 
         expect(find.text('Content is required'), findsOneWidget);
@@ -143,7 +152,7 @@ void main() {
           'Valid content for the document',
         );
 
-        await tester.tap(find.text('Add Document'));
+        await tester.tap(find.widgetWithText(ElevatedButton, 'Add Document'));
         await tester.pump();
 
         // No validation errors should be shown
@@ -175,7 +184,7 @@ void main() {
           'tag1, tag2, tag3',
         );
 
-        await tester.tap(find.text('Add Document'));
+        await tester.tap(find.widgetWithText(ElevatedButton, 'Add Document'));
         await tester.pump();
 
         // Verify the correct event was added to the bloc
@@ -197,7 +206,7 @@ void main() {
           'This is test content',
         );
 
-        await tester.tap(find.text('Add Document'));
+        await tester.tap(find.widgetWithText(ElevatedButton, 'Add Document'));
         await tester.pump();
 
         verify(() => mockSearchBloc.add(any(that: isA<AddDocumentEvent>())))
@@ -221,7 +230,7 @@ void main() {
           'tag1,  tag2 , ,tag3, ',
         );
 
-        await tester.tap(find.text('Add Document'));
+        await tester.tap(find.widgetWithText(ElevatedButton, 'Add Document'));
         await tester.pump();
 
         verify(() => mockSearchBloc.add(any(that: isA<AddDocumentEvent>())))
@@ -237,7 +246,7 @@ void main() {
         await tester.pumpWidget(createAddDocumentPage());
 
         expect(find.byType(CircularProgressIndicator), findsNWidgets(2));
-        expect(find.text('Add Document'), findsNothing);
+        expect(find.widgetWithText(ElevatedButton, 'Add Document'), findsNothing);
       });
 
       testWidgets('disables submit button when loading',
@@ -334,7 +343,7 @@ void main() {
         expect(find.byType(TextFormField), findsNWidgets(4));
 
         // Verify the form validates required fields
-        await tester.tap(find.text('Add Document'));
+        await tester.tap(find.widgetWithText(ElevatedButton, 'Add Document'));
         await tester.pump();
 
         // Both title and content should show validation errors
