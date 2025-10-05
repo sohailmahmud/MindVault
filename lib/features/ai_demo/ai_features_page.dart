@@ -100,7 +100,7 @@ class _AIFeaturesPageState extends State<AIFeaturesPage> {
                     const SizedBox(height: 8),
                     Text('Status: $_aiStatus'),
                     const SizedBox(height: 4),
-                    Text('Embedding Dimension: ${TfLiteService.embeddingDim}'),
+                    const Text('Embedding Dimension: ${TfLiteService.embeddingDim}'),
                     const SizedBox(height: 4),
                     const Text('Max Sequence Length: 128'),
                   ],
@@ -144,7 +144,7 @@ class _AIFeaturesPageState extends State<AIFeaturesPage> {
                                   child:
                                       CircularProgressIndicator(strokeWidth: 2),
                                 ),
-                                const SizedBox(width: 8),
+                                SizedBox(width: 8),
                                 Text('Processing...'),
                               ],
                             )
