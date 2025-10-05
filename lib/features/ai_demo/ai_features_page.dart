@@ -100,7 +100,8 @@ class _AIFeaturesPageState extends State<AIFeaturesPage> {
                     const SizedBox(height: 8),
                     Text('Status: $_aiStatus'),
                     const SizedBox(height: 4),
-                    const Text('Embedding Dimension: ${TfLiteService.embeddingDim}'),
+                    const Text(
+                        'Embedding Dimension: ${TfLiteService.embeddingDim}'),
                     const SizedBox(height: 4),
                     const Text('Max Sequence Length: 128'),
                   ],
