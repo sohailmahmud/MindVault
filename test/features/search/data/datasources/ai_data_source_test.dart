@@ -55,7 +55,7 @@ void main() {
         final embedding = await aiDataSource.generateEmbedding(testText);
 
         expect(embedding, isA<List<double>>());
-        expect(embedding.length, equals(100));
+        expect(embedding.length, equals(384));
         expect(embedding, isNotEmpty);
       });
 
@@ -84,7 +84,7 @@ void main() {
         final embedding = await aiDataSource.generateEmbedding(emptyText);
 
         expect(embedding, isA<List<double>>());
-        expect(embedding.length, equals(100));
+        expect(embedding.length, equals(384));
       });
     });
 
@@ -98,14 +98,14 @@ void main() {
         expect(similarity, equals(1.0));
       });
 
-      test('should return 0.0 for embeddings of different lengths', () async {
+      test('should throw error for embeddings of different lengths', () async {
         final embedding1 = [1.0, 2.0, 3.0];
         final embedding2 = [1.0, 2.0];
 
-        final similarity =
-            await aiDataSource.calculateSimilarity(embedding1, embedding2);
-
-        expect(similarity, equals(0.0));
+        expect(
+          () => aiDataSource.calculateSimilarity(embedding1, embedding2),
+          throwsArgumentError,
+        );
       });
 
       test('should return 0.0 for zero embeddings', () async {

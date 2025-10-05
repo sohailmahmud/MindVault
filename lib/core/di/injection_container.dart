@@ -16,6 +16,7 @@ import '../../features/search/domain/usecases/semantic_search.dart';
 import '../../features/search/domain/usecases/update_document.dart';
 import '../../features/search/presentation/bloc/search_bloc.dart';
 import '../../objectbox.g.dart';
+import '../ai/tflite_service.dart';
 
 final serviceLocator = GetIt.instance;
 
@@ -25,6 +26,11 @@ Future<void> initializeDependencies() async {
   final store =
       await openStore(directory: p.join(docsDir.path, 'mindvault-db'));
   serviceLocator.registerLazySingleton<Store>(() => store);
+
+  // AI Service
+  serviceLocator.registerLazySingleton<TfLiteService>(
+    () => TfLiteService(),
+  );
 
   // Data sources
   serviceLocator.registerLazySingleton<SearchLocalDataSource>(

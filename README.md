@@ -167,11 +167,15 @@ MindVault uses a sophisticated multi-layered search approach:
 4. **Similarity Scoring**: Weighted relevance scoring
 5. **Result Ranking**: Orders results by relevance score
 
-### Smart Features (Planned)
-- **Auto-categorization**: Automatic category suggestions based on content
-- **Tag extraction**: Auto-generate relevant tags from document content
+### Smart Features (AI-Powered)
+- **Real TensorFlow Lite Integration**: On-device AI processing for privacy and speed
+- **Semantic Embeddings**: 384-dimensional text embeddings for accurate similarity
+- **Advanced Tokenization**: Vocabulary-based text preprocessing with 500+ words
+- **Cosine Similarity**: Mathematical precision in document relevance scoring
+- **Auto-categorization**: Automatic category suggestions based on content analysis
+- **Tag extraction**: AI-powered tag generation from document content
 - **Content summarization**: Generate brief summaries of long documents
-- **Similar document discovery**: Find related documents automatically
+- **Similar document discovery**: Find related documents using embedding similarity
 
 ## UI/UX Features
 
@@ -237,7 +241,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Roadmap
 
 ### Version 2.0
-- [ ] Real TensorFlow Lite model integration
+- [x] **Real TensorFlow Lite model integration** ✅
+- [x] **AI-powered semantic search with embeddings** ✅
+- [x] **Interactive AI features demonstration** ✅
+- [x] **On-device processing for privacy** ✅
 - [ ] Voice-to-text document creation
 - [ ] Document sharing and export
 - [ ] Cloud sync (optional)
@@ -255,10 +262,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 If you encounter any issues or have questions:
 - Open an [issue](../../issues) on GitHub
 - Check the [FAQ](../../wiki/FAQ) in our wiki
-- Join our [Discord community](https://discord.gg/mindvault)
 
 ---
 
-**Built with ❤️ using Flutter & Clean Architecture**
+**Built with ❤️ using Flutter & Clean Architecture by Sohail Mahmud**
 
 *MindVault - Your Personal Knowledge Vault*

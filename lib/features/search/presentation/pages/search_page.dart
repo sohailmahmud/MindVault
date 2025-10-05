@@ -8,6 +8,7 @@ import '../bloc/search_state.dart';
 import '../widgets/document_card.dart';
 import '../widgets/search_bar_widget.dart';
 import 'add_document_page.dart';
+import '../../../ai_demo/ai_features_page.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key});
@@ -134,6 +135,18 @@ class _SearchViewState extends State<SearchView> {
                     ),
                   ]
                 : [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const AIFeaturesPage(),
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.psychology),
+                      tooltip: 'AI Features',
+                    ),
                     IconButton(
                       onPressed: _toggleSelectionMode,
                       icon: const Icon(Icons.checklist),

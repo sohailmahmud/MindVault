@@ -1,6 +1,6 @@
 import 'dart:math' as math;
-// import 'package:tflite_flutter/tflite_flutter.dart';  // Temporarily disabled
 import '../models/document_model.dart';
+import '../../../../core/ai/tflite_service.dart';
 
 abstract class AIDataSource {
   Future<List<DocumentModel>> performSemanticSearch(
@@ -19,16 +19,14 @@ abstract class AIDataSource {
 }
 
 class AIDataSourceImpl implements AIDataSource {
-  // Interpreter? _interpreter;  // Temporarily disabled
+  final TfLiteService _tfLiteService = TfLiteService();
   bool _isModelLoaded = false;
 
   @override
   Future<void> initializeModel() async {
     try {
-      // For this example, we'll use a simple similarity calculation
-      // In a real implementation, you would load a TensorFlow Lite model
-      // _interpreter = await Interpreter.fromAsset('assets/models/semantic_model.tflite');
-      _isModelLoaded = true;
+      await _tfLiteService.initialize();
+      _isModelLoaded = _tfLiteService.isInitialized;
     } catch (e) {
       // Log error without using print
       _isModelLoaded = false;
@@ -37,56 +35,19 @@ class AIDataSourceImpl implements AIDataSource {
 
   @override
   Future<List<double>> generateEmbedding(String text) async {
-    // Simplified embedding generation for demo purposes
-    // In a real implementation, you would use the TensorFlow Lite model
     if (!_isModelLoaded) {
       await initializeModel();
     }
 
-    // For demo: create a simple word-based embedding
-    return _createSimpleEmbedding(text);
-  }
-
-  List<double> _createSimpleEmbedding(String text) {
-    // Simple character-based embedding for demo
-    final words = text.toLowerCase().split(' ');
-    final embedding = List<double>.filled(100, 0.0);
-
-    for (int i = 0; i < words.length && i < embedding.length; i++) {
-      final word = words[i];
-      if (word.isNotEmpty) {
-        // Simple hash-based embedding
-        final hash = word.hashCode % 1000;
-        embedding[i % embedding.length] = hash / 1000.0;
-      }
-    }
-
-    return embedding;
+    // Use TensorFlow Lite service for embedding generation
+    return await _tfLiteService.generateEmbedding(text);
   }
 
   @override
   Future<double> calculateSimilarity(
       List<double> embedding1, List<double> embedding2) async {
-    if (embedding1.length != embedding2.length) {
-      return 0.0;
-    }
-
-    // Calculate cosine similarity
-    double dotProduct = 0.0;
-    double norm1 = 0.0;
-    double norm2 = 0.0;
-
-    for (int i = 0; i < embedding1.length; i++) {
-      dotProduct += embedding1[i] * embedding2[i];
-      norm1 += embedding1[i] * embedding1[i];
-      norm2 += embedding2[i] * embedding2[i];
-    }
-
-    if (norm1 == 0.0 || norm2 == 0.0) {
-      return 0.0;
-    }
-
-    return dotProduct / (math.sqrt(norm1) * math.sqrt(norm2));
+    // Use TensorFlow Lite service for similarity calculation
+    return _tfLiteService.calculateSimilarity(embedding1, embedding2);
   }
 
   @override
