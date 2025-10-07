@@ -85,23 +85,6 @@ lib/
    flutter run
    ```
 
-### Building for Production
-
-**Android APK:**
-```bash
-flutter build apk --release
-```
-
-**Android App Bundle:**
-```bash
-flutter build appbundle --release
-```
-
-**iOS:**
-```bash
-flutter build ios --release
-```
-
 ## Dependencies
 
 ### Core Dependencies
